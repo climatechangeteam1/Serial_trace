@@ -1,299 +1,2786 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050817">
-<title>SERIAL TRACE — لغز تحقيق جماعي</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SERIAL TRACE | آثار الجريمة</title>
+
 <style>
-:root{--bg:#050817;--panel:#0b1124ee;--panel2:#111a34;--line:#26355f;--txt:#eef5ff;--muted:#8e9ab7;--cyan:#55e7ff;--blue:#4d8dff;--violet:#9b70ff;--good:#62e6a5;--bad:#ff7189;--gold:#ffd66d}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 80% 0,#17235a 0,#070b1b 40%,#03050d 100%);color:var(--txt);font-family:Tahoma,Arial,sans-serif}body{overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:8px 8px}
-.wrap{width:min(1050px,100%);margin:auto;padding:14px 12px 40px}.top{height:52px;display:flex;justify-content:space-between;align-items:center}.logo{font-weight:900;letter-spacing:.08em}.logo b{color:var(--cyan)}
-button,input{font:inherit}.btn{border:1px solid #31436f;background:#0c142b;color:var(--txt);border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;transition:.18s;touch-action:manipulation}.btn:active{transform:scale(.97)}.primary{background:linear-gradient(135deg,#398eff,#8a5cff);border-color:#6abfff;box-shadow:0 12px 34px #397aff30}.good{border-color:#2b7257;color:#8fffc8}.danger{border-color:#743348;color:#ff9eae}.screen{display:none;animation:show .3s ease}.screen.active{display:block}@keyframes show{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-.hero{text-align:center;padding:9vh 8px 7vh}.mark{width:86px;height:86px;margin:auto auto 22px;border:1px solid #49609b;border-radius:25px;display:grid;place-items:center;background:#0d1630;box-shadow:0 0 55px #5cecff18}.mark:after{content:"";width:38px;height:38px;border:3px solid var(--cyan);border-radius:50%}.hero h1{font-size:clamp(42px,10vw,78px);margin:0;letter-spacing:.12em;line-height:1}.hero .sub{color:#b5c1da;letter-spacing:.15em;margin:15px 0 25px}.hero p{max-width:680px;margin:0 auto 28px;color:var(--muted);line-height:1.9}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
-.backbar{display:flex;justify-content:flex-start;margin:4px 0 12px}
-.backbtn{border:1px solid #30436e;background:#0b1429;color:#dce8ff;border-radius:12px;padding:10px 15px;font-weight:800;cursor:pointer;box-shadow:0 8px 25px #0007}.routehub{margin-bottom:12px}.caseCard{border:1px solid #2d4070;background:#0a1329;color:#eef5ff;border-radius:16px;padding:15px;text-align:right;cursor:pointer;min-height:155px}.caseCard:active{transform:scale(.98)}.caseCard h3{margin:12px 0 7px}.routebtn{display:block;width:100%;text-align:right;border:1px solid #30436e;background:#0a1329;color:#eef5ff;border-radius:13px;padding:12px;margin-top:8px;font-weight:800;cursor:pointer}.routebtn small{display:block;color:#8e9ab7;font-weight:400;margin-top:3px}
-#game>.backbar{position:sticky;top:0;z-index:12;padding:8px 0;background:linear-gradient(#050817 78%,transparent);margin-bottom:4px}
-.backbtn:active{transform:scale(.97)}
-.card{background:linear-gradient(145deg,#101932ed,#080d1ced);border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:0 18px 55px #0008;backdrop-filter:blur(10px)}.title{margin:0 0 7px;font-size:26px}.muted{color:var(--muted);line-height:1.8}.grid{display:grid;gap:11px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.tag{display:inline-block;color:#aab7d6;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.pill{display:inline-flex;border:1px solid #30436e;background:#0a1227;border-radius:999px;padding:6px 9px;font-size:11px;color:#c9d5ee}.choices{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:22px 0}.choice{padding:17px 8px;border-radius:15px;border:1px solid var(--line);background:#0a1226;color:white;font-size:21px;font-weight:900;cursor:pointer}.choice.sel{border-color:var(--cyan);background:#10263a;box-shadow:0 0 24px #55e7ff20}.field{display:grid;gap:7px}.field label{font-size:12px;color:#a5b2cf}.input{background:#070d1d;border:1px solid #2a3b65;border-radius:12px;color:#fff;padding:13px;outline:none;width:100%}.input:focus{border-color:var(--cyan)}
-.casehead{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.timer{font-size:21px;font-weight:900;color:var(--cyan);font-variant-numeric:tabular-nums}.timer.warn{color:var(--gold)}.nav{display:flex;gap:7px;overflow:auto;position:sticky;top:0;z-index:4;padding:10px 0 13px;background:linear-gradient(#050817 75%,transparent);scrollbar-width:none}.nav .btn{white-space:nowrap;font-size:12px;padding:10px 12px}.tab{display:none}.tab.active{display:block}.scene{min-height:230px;position:relative;overflow:hidden;border-radius:18px;border:1px solid #2c3b67;background:radial-gradient(circle at 65% 35%,#273a6b,#0a1020 58%);padding:20px}.scene:before{content:"";position:absolute;inset:18% -10%;border-top:1px solid #5c75ad2c;border-bottom:1px solid #5c75ad2c;transform:rotate(-8deg)}.scene>*{position:relative}.location{font-size:22px;font-weight:900}.actions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.action{padding:15px;text-align:right;border:1px solid #2b3b66;background:#0b142b;border-radius:15px;cursor:pointer;color:white}.action b{display:block;margin-bottom:5px}.action span{color:var(--muted);font-size:12px;line-height:1.6}.evidence,.suspect,.timeline,.connection{border:1px solid var(--line);background:#0a1226;border-radius:15px;padding:14px}.evidence{cursor:pointer}.locked{opacity:.45}.meter{height:7px;background:#182039;border-radius:9px;overflow:hidden}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:var(--w)}.list{display:grid;gap:9px}.empty{padding:25px;text-align:center;border:1px dashed #2a385b;color:#74809d;border-radius:15px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#0b1429;border:1px solid #3b4d79;padding:12px 16px;border-radius:13px;z-index:30;transition:.2s;text-align:center;max-width:90%}.toast.show{opacity:1;transform:translate(-50%,0)}.modal{position:fixed;inset:0;background:#02040dcc;display:none;align-items:flex-end;justify-content:center;padding:10px;z-index:20}.modal.show{display:flex}.modalbox{width:min(720px,100%);max-height:88vh;overflow:auto;background:#091022;border:1px solid #354674;border-radius:22px;padding:20px}.close{float:left;border:0;background:#151e36;color:white;border-radius:10px;padding:7px 10px}.option{width:100%;text-align:right;border:1px solid #293961;background:#0b1429;color:white;padding:13px;border-radius:12px;cursor:pointer}.option.sel{border-color:var(--cyan)}.score{font-size:55px;font-weight:950;color:var(--cyan)}.center{text-align:center}.divider{height:1px;background:#233154;margin:16px 0}
-@media(max-width:700px){.wrap{padding:10px 9px 28px}.g2,.g3{grid-template-columns:1fr}.choices{grid-template-columns:repeat(5,1fr)}.choice{font-size:18px;padding:13px 4px}.actions-grid{grid-template-columns:1fr}.casehead{flex-direction:column}.hero h1{font-size:43px}}
+*{box-sizing:border-box}
+
+:root{
+ --bg:#050817;
+ --bg2:#091127;
+ --card:#0d1730;
+ --card2:#111d3a;
+ --line:#26395f;
+ --cyan:#25d9ff;
+ --blue:#347cff;
+ --purple:#8a62ff;
+ --green:#28df9d;
+ --red:#ff5277;
+ --gold:#ffd166;
+ --text:#f2f6ff;
+ --muted:#91a2c5;
+}
+
+body{
+ margin:0;
+ min-height:100vh;
+ background:
+ radial-gradient(circle at 15% 5%,#16275c55,transparent 35%),
+ radial-gradient(circle at 90% 20%,#54227744,transparent 30%),
+ linear-gradient(145deg,#030510,#071027 55%,#050817);
+ color:var(--text);
+ font-family:Tahoma,Arial,sans-serif;
+}
+
+button,input{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
+.app{
+ width:min(1000px,100%);
+ margin:auto;
+ padding:12px;
+ min-height:100vh;
+}
+
+.topbar{
+ height:58px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ position:sticky;
+ top:0;
+ z-index:20;
+ background:#050817dd;
+ backdrop-filter:blur(12px);
+}
+
+.logo{
+ font-weight:900;
+ letter-spacing:2px;
+ color:var(--cyan);
+}
+
+.top-actions{
+ display:flex;
+ gap:7px;
+}
+
+.screen{
+ display:none;
+ animation:appear .22s ease;
+}
+
+.screen.active{
+ display:block;
+}
+
+@keyframes appear{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:none}
+}
+
+.card{
+ background:linear-gradient(145deg,#101a35,#080f21);
+ border:1px solid var(--line);
+ border-radius:22px;
+ padding:20px;
+ box-shadow:0 20px 60px #0007;
+}
+
+.hero{
+ min-height:82vh;
+ display:grid;
+ place-items:center;
+ text-align:center;
+}
+
+.hero-card{
+ width:min(750px,100%);
+ padding:45px 22px;
+}
+
+h1{
+ font-size:clamp(48px,12vw,88px);
+ line-height:.85;
+ letter-spacing:6px;
+ margin:15px 0;
+}
+
+h2{
+ font-size:clamp(25px,6vw,40px);
+ margin:5px 0 15px;
+}
+
+h3{
+ margin:5px 0 10px;
+}
+
+p{
+ line-height:1.8;
+}
+
+.muted{
+ color:var(--muted);
+}
+
+.btn{
+ width:100%;
+ border:1px solid var(--line);
+ border-radius:15px;
+ padding:13px 15px;
+ color:white;
+ background:linear-gradient(145deg,#162542,#0c1529);
+ transition:.18s;
+}
+
+.btn:active{
+ transform:scale(.98);
+}
+
+.btn.primary{
+ background:linear-gradient(135deg,#187db0,#6849d7);
+ border-color:#6682e9;
+}
+
+.btn.danger{
+ background:#2b1020;
+ border-color:#71314a;
+}
+
+.btn.green{
+ background:#0d342b;
+ border-color:#287d66;
+}
+
+.btn.small{
+ width:auto;
+ padding:8px 12px;
+ font-size:13px;
+}
+
+.stack{
+ display:grid;
+ gap:10px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+@media(max-width:650px){
+ .grid{grid-template-columns:1fr}
+}
+
+.choice{
+ text-align:right;
+ min-height:65px;
+}
+
+.choice strong{
+ display:block;
+}
+
+.choice small,
+.choice span{
+ display:block;
+ color:var(--muted);
+ margin-top:5px;
+}
+
+.choice.selected{
+ border-color:var(--cyan);
+ box-shadow:0 0 0 2px #25d9ff22,0 0 25px #25d9ff18;
+}
+
+.badge{
+ display:inline-block;
+ padding:6px 10px;
+ border-radius:99px;
+ background:#11233e;
+ color:var(--cyan);
+ font-size:12px;
+ font-weight:bold;
+}
+
+.notice{
+ padding:14px;
+ border-radius:15px;
+ background:#101b34;
+ border:1px solid #263a61;
+ margin:10px 0;
+}
+
+.success{
+ background:#0b2c24;
+ border-color:#278367;
+}
+
+.error{
+ background:#30111e;
+ border-color:#77334d;
+}
+
+.warning{
+ background:#2c240f;
+ border-color:#76642f;
+}
+
+.case-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+@media(max-width:650px){
+ .case-grid{grid-template-columns:1fr}
+}
+
+.case-card{
+ text-align:right;
+}
+
+.case-number{
+ color:var(--cyan);
+ font-size:12px;
+}
+
+.locked{
+ opacity:.4;
+}
+
+.tabs{
+ display:flex;
+ gap:7px;
+ overflow:auto;
+ padding:7px 0 12px;
+ position:sticky;
+ top:58px;
+ z-index:10;
+ background:#050817ee;
+ backdrop-filter:blur(10px);
+}
+
+.tab{
+ width:auto;
+ white-space:nowrap;
+ color:var(--muted);
+ background:#0c162b;
+ border:1px solid var(--line);
+ border-radius:11px;
+ padding:9px 12px;
+}
+
+.tab.active{
+ color:white;
+ border-color:#617be1;
+}
+
+.timeline{
+ display:grid;
+}
+
+.time-row{
+ display:grid;
+ grid-template-columns:80px 1fr;
+ gap:12px;
+ padding:14px 0;
+ border-bottom:1px solid #20304e;
+}
+
+.time{
+ color:var(--cyan);
+ font-weight:bold;
+}
+
+input{
+ width:100%;
+ background:#050b18;
+ color:white;
+ border:1px solid var(--line);
+ border-radius:12px;
+ padding:13px;
+ outline:none;
+}
+
+input:focus{
+ border-color:var(--cyan);
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ display:none;
+ place-items:center;
+ padding:20px;
+ background:#000b;
+ z-index:100;
+}
+
+.modal.show{
+ display:grid;
+}
+
+.modal-box{
+ width:min(580px,100%);
+ background:#0b1428;
+ border:1px solid #38517f;
+ border-radius:22px;
+ padding:22px;
+ box-shadow:0 30px 100px #000;
+}
+
+.reason-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:8px;
+}
+
+@media(max-width:600px){
+ .reason-grid{grid-template-columns:1fr}
+}
+
+.score{
+ color:var(--gold);
+ font-size:22px;
+ font-weight:bold;
+}
+
+footer{
+ text-align:center;
+ color:#596b91;
+ padding:30px 10px;
+ font-size:12px;
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-<header class="top"><div class="logo">SERIAL <b>TRACE</b></div><button class="btn" id="sound">🔊 الصوت</button></header>
 
-<section id="home" class="screen active"><div class="hero"><div class="mark"></div><h1>SERIAL TRACE</h1><div class="sub">لغز تحقيق جماعي</div><p>لعبة تحقيق جماعية على هاتف واحد. لا يوجد لاعب هو المجرم. كل المجرمين والمشتبه بهم شخصيات خيالية داخل القصة، وكل قرار يغير طريق التحقيق.</p><div class="actions"><button class="btn primary" onclick="showCases()">ابدأ التحقيق</button><button class="btn" onclick="how()">طريقة اللعب</button></div></div></section>
+<div class="app">
 
-<section id="cases" class="screen">
-<div class="backbar"><button class="backbtn" onclick="go('home')">← رجوع</button></div>
-<div class="card">
-<h2 class="title">🗂️ اختروا القضية</h2>
-<p class="muted">أمامكم أكثر من 50 قضية. اختاروا أي قضية تريدون التحقيق فيها. يمكن ترتيبها حسب الصعوبة.</p>
-<div class="grid g3" id="caseGrid"></div>
-</div>
+<header class="topbar">
+ <div class="logo">SERIAL TRACE</div>
+
+ <div class="top-actions">
+  <button id="backBtn" class="btn small">↩ رجوع</button>
+  <button id="exitBtn" class="btn small danger">🚪 خروج</button>
+ </div>
+</header>
+
+
+<!-- الصفحة الرئيسية -->
+<section id="home" class="screen active">
+
+ <div class="hero">
+  <div class="card hero-card">
+
+   <span class="badge">لعبة تحقيق جماعية — أوفلاين</span>
+
+   <h1>
+    SERIAL<br>
+    TRACE
+   </h1>
+
+   <p class="muted">
+    آثار الجريمة
+    <br>
+    60 قضية مختلفة • مسارات متفرعة • أدلة • تناقضات • نظريات
+   </p>
+
+   <div class="stack">
+
+    <button class="btn primary" onclick="startSetup()">
+     🔎 ابدأ التحقيق
+    </button>
+
+    <button class="btn" onclick="showHow()">
+     📖 شرح اللعبة
+    </button>
+
+    <button class="btn" onclick="showCases()">
+     📁 صفحة القضايا
+    </button>
+
+   </div>
+
+  </div>
+ </div>
+
 </section>
 
-<section id="count" class="screen"><div class="card center"><h2 class="title">كم عدد المحققين؟</h2><p class="muted">اختاروا من 2 إلى 6 لاعبين. مرروا الهاتف بينهم.</p><div id="counts" class="choices"></div><button id="countGo" class="btn primary" disabled>متابعة</button></div></section>
 
+<!-- عدد اللاعبين -->
+<section id="players" class="screen">
+
+ <div class="card">
+
+  <h2>👥 عدد المحققين</h2>
+
+  <p class="muted">
+   اختاروا من 2 إلى 6 محققين.
+   <br>
+   جميع اللاعبين محققون، ولا يوجد بينهم المجرم.
+  </p>
+
+  <div class="grid">
+
+   <button class="btn choice" onclick="choosePlayers(2)">
+    <strong>2 محققين</strong>
+    <span>فريق صغير</span>
+   </button>
+
+   <button class="btn choice" onclick="choosePlayers(3)">
+    <strong>3 محققين</strong>
+    <span>فريق متوازن</span>
+   </button>
+
+   <button class="btn choice" onclick="choosePlayers(4)">
+    <strong>4 محققين</strong>
+    <span>فريق تحقيق</span>
+   </button>
+
+   <button class="btn choice" onclick="choosePlayers(5)">
+    <strong>5 محققين</strong>
+    <span>فريق كبير</span>
+   </button>
+
+   <button class="btn choice" onclick="choosePlayers(6)">
+    <strong>6 محققين</strong>
+    <span>فريق كامل</span>
+   </button>
+
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- أسماء اللاعبين -->
 <section id="names" class="screen">
-<div class="backbar"><button class="backbtn" onclick="go('count')">← رجوع</button></div>
-<div class="card">
-<h2 class="title">فريق التحقيق</h2>
-<p class="muted">أدخلوا أسماء المحققين.</p>
-<div id="playerNames" class="grid g2"></div>
-<div class="divider"></div>
-<div class="actions" style="justify-content:stretch;display:flex!important;margin-top:18px">
-<button type="button" class="btn primary" style="flex:1;display:block!important;visibility:visible!important" onclick="startCase()">▶ ابدأ القضية</button>
-</div>
-</div>
+
+ <div class="card">
+
+  <h2>✍️ أسماء المحققين</h2>
+
+  <div id="nameInputs" class="stack"></div>
+
+  <br>
+
+  <button class="btn primary" onclick="savePlayers()">
+   متابعة →
+  </button>
+
+ </div>
+
 </section>
 
-<section id="brief" class="screen"><div class="backbar"><button class="backbtn" onclick="go('names')">← رجوع</button></div><div class="card"><div class="casehead"><div><span class="pill">القضية ${String(selectedCaseId).padStart(2,"0")}</span><h2 class="title">${getSelectedCase().title}</h2><p class="muted">📍 ${getSelectedCase().city}</p></div><div id="briefTimer" class="timer">25:00</div></div><div class="divider"></div><p class="muted">${getSelectedCase().summary}</p><p class="muted">ستة مشتبه بهم، عدة مواقع، مسارات متفرعة، وأدلة يمكن أن تكون حاسمة أو مضللة. لا يوجد لاعب هو المجرم.</p><div class="grid g3"><div class="card"><b>6</b><div class="tag">مشتبه بهم</div></div><div class="card"><b>18</b><div class="tag">أدلة ومسارات</div></div><div class="card"><b>3</b><div class="tag">محاولات اتهام</div></div></div><div style="margin-top:15px"><button class="btn primary" onclick="begin()">ادخلوا موقع التحقيق</button></div></div></section>
 
-<section id="game" class="screen"><div class="backbar" style="display:flex;gap:8px;justify-content:space-between;align-items:center"><button class="backbtn" onclick="showRoutes()">↩ المسارات</button><button class="backbtn" onclick="exitCase()">🚪 خروج من القضية</button></div><div class="casehead"><div><span class="pill">القضية ${String(selectedCaseId).padStart(2,"0")} • قيد التحقيق</span><h2 class="title">${getSelectedCase().title}</h2></div><div id="timer" class="timer">25:00</div></div><div id="nav" class="nav"></div><div id="content"></div></section>
+<!-- القضايا -->
+<section id="cases" class="screen">
 
-<section id="result" class="screen"><div class="backbar"><button class="backbtn" onclick="go('game');render()">← العودة للتحقيق</button></div><div id="resultBox"></div></section>
+ <div class="card">
+
+  <h2>📁 القضايا</h2>
+
+  <p class="muted">
+   اختروا قضية. كل قضية لها مكان وقصة ومجرم ومشتبهون وأدلة مختلفة.
+  </p>
+
+  <div id="caseGrid" class="case-grid"></div>
+
+ </div>
+
+</section>
+
+
+<!-- مقدمة القضية -->
+<section id="intro" class="screen">
+ <div id="introContent"></div>
+</section>
+
+
+<!-- التحقيق -->
+<section id="investigation" class="screen">
+
+ <div id="tabs" class="tabs"></div>
+
+ <div id="investigationContent"></div>
+
+</section>
+
+
+<!-- التحقيق النهائي -->
+<section id="final" class="screen">
+
+ <div id="finalContent"></div>
+
+</section>
+
+
+<!-- النتيجة -->
+<section id="result" class="screen">
+
+ <div id="resultContent"></div>
+
+</section>
+
+
+<!-- شرح -->
+<section id="how" class="screen">
+
+ <div class="card">
+
+  <h2>📖 كيف تلعبون؟</h2>
+
+  <div class="notice">
+   👥 <b>أنتم فريق واحد.</b>
+   <br>
+   لا يوجد لاعب مجرم.
+  </div>
+
+  <div class="notice">
+   🧭 كل قرار يفتح مسارًا مختلفًا.
+   <br>
+   بعض المسارات تعطي أدلة، وبعضها يضيع الوقت.
+  </div>
+
+  <div class="notice">
+   🔎 لا تعتمدوا على دليل واحد.
+   <br>
+   اربطوا الأدلة مع الخط الزمني.
+  </div>
+
+  <div class="notice">
+   🧩 يمكن أن تكون النظرية الأولى خاطئة.
+   <br>
+   ارجعوا للمسارات وجربوا طريقًا مختلفًا.
+  </div>
+
+  <div class="notice">
+   🚪 يمكنكم الخروج من القضية في أي وقت،
+   لكن سيتم طلب تأكيد قبل الخروج.
+  </div>
+
+  <div class="notice">
+   🏆 كل قضية لها نقاط.
+   <br>
+   الأدلة الصحيحة والربط الصحيح يزيدان النتيجة.
+  </div>
+
+  <button class="btn primary" onclick="goBack()">
+   ↩ رجوع
+  </button>
+
+ </div>
+
+</section>
+
+
+<footer>
+ SERIAL TRACE — Detective Party Mystery
+ <br>
+ HTML5 + CSS3 + Vanilla JavaScript
+</footer>
+
 </div>
-<div id="modal" class="modal"><div class="modalbox"><button class="close" onclick="closeModal()">✕</button><div id="modalContent"></div></div></div>
-<div id="toast" class="toast"></div>
+
+
+<!-- نافذة التأكيد -->
+<div id="modal" class="modal">
+
+ <div class="modal-box" id="modalContent"></div>
+
+</div>
+
 
 <script>
-const CASES=[{"id":1,"title":"سرقة لوحة الليل","city":"القاهرة","type":"سرقة أثر","difficulty":"متوسطة","time":25,"summary":"قضية سرقة أثر في القاهرة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":2,"title":"اختفاء المخطوطة الحمراء","city":"الإسكندرية","type":"اختفاء غامض","difficulty":"صعبة","time":25,"summary":"قضية اختفاء غامض في الإسكندرية. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":3,"title":"لغز الخاتم الأزرق","city":"المنصورة","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":25,"summary":"قضية سرقة وثيقة في المنصورة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":4,"title":"جريمة في الفندق القديم","city":"أسوان","type":"ابتزاز","difficulty":"خبير","time":25,"summary":"قضية ابتزاز في أسوان. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":5,"title":"الطرد الذي لم يصل","city":"الأقصر","type":"اختفاء شخص","difficulty":"متوسطة","time":30,"summary":"قضية اختفاء شخص في الأقصر. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":6,"title":"اختفاء صندوق الأسرار","city":"بورسعيد","type":"سرقة تحفة","difficulty":"صعبة","time":30,"summary":"قضية سرقة تحفة في بورسعيد. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":7,"title":"ظل على النيل","city":"السويس","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":30,"summary":"قضية تلاعب بسجل في السويس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":8,"title":"لغز القطار الأخير","city":"الفيوم","type":"جريمة غامضة","difficulty":"خبير","time":30,"summary":"قضية جريمة غامضة في الفيوم. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":9,"title":"ساعة بلا عقارب","city":"طنطا","type":"سرقة أثر","difficulty":"متوسطة","time":35,"summary":"قضية سرقة أثر في طنطا. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":10,"title":"المفتاح المفقود","city":"الزقازيق","type":"اختفاء غامض","difficulty":"صعبة","time":35,"summary":"قضية اختفاء غامض في الزقازيق. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":11,"title":"سر الخزنة رقم 7","city":"مرسى مطروح","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":35,"summary":"قضية سرقة وثيقة في مرسى مطروح. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":12,"title":"رسالة منتصف الليل","city":"شرم الشيخ","type":"ابتزاز","difficulty":"خبير","time":35,"summary":"قضية ابتزاز في شرم الشيخ. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":13,"title":"المخطط السري","city":"إسطنبول","type":"اختفاء شخص","difficulty":"متوسطة","time":40,"summary":"قضية اختفاء شخص في إسطنبول. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":14,"title":"لغز القصر المهجور","city":"روما","type":"سرقة تحفة","difficulty":"صعبة","time":40,"summary":"قضية سرقة تحفة في روما. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":15,"title":"الحقيبة السوداء","city":"باريس","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":40,"summary":"قضية تلاعب بسجل في باريس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":16,"title":"الوشاح المجهول","city":"القاهرة","type":"جريمة غامضة","difficulty":"خبير","time":40,"summary":"قضية جريمة غامضة في القاهرة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":17,"title":"سر المرآة القديمة","city":"الإسكندرية","type":"سرقة أثر","difficulty":"متوسطة","time":25,"summary":"قضية سرقة أثر في الإسكندرية. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":18,"title":"الطابع النادر","city":"المنصورة","type":"اختفاء غامض","difficulty":"صعبة","time":25,"summary":"قضية اختفاء غامض في المنصورة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":19,"title":"اللوحة التي تغيّرت","city":"أسوان","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":25,"summary":"قضية سرقة وثيقة في أسوان. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":20,"title":"جريمة في الميناء","city":"الأقصر","type":"ابتزاز","difficulty":"خبير","time":25,"summary":"قضية ابتزاز في الأقصر. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":21,"title":"اختفاء العقد الملكي","city":"بورسعيد","type":"اختفاء شخص","difficulty":"متوسطة","time":30,"summary":"قضية اختفاء شخص في بورسعيد. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":22,"title":"لغز الغرفة 13","city":"السويس","type":"سرقة تحفة","difficulty":"صعبة","time":30,"summary":"قضية سرقة تحفة في السويس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":23,"title":"الرسالة المشفرة","city":"الفيوم","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":30,"summary":"قضية تلاعب بسجل في الفيوم. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":24,"title":"سر المستودع","city":"طنطا","type":"جريمة غامضة","difficulty":"خبير","time":30,"summary":"قضية جريمة غامضة في طنطا. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":25,"title":"المسافر الصامت","city":"الزقازيق","type":"سرقة أثر","difficulty":"متوسطة","time":35,"summary":"قضية سرقة أثر في الزقازيق. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":26,"title":"الملف الأزرق","city":"مرسى مطروح","type":"اختفاء غامض","difficulty":"صعبة","time":35,"summary":"قضية اختفاء غامض في مرسى مطروح. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":27,"title":"الساعة الذهبية","city":"شرم الشيخ","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":35,"summary":"قضية سرقة وثيقة في شرم الشيخ. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":28,"title":"لغز الصورة الأخيرة","city":"إسطنبول","type":"ابتزاز","difficulty":"خبير","time":35,"summary":"قضية ابتزاز في إسطنبول. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":29,"title":"صندوق بلا اسم","city":"روما","type":"اختفاء شخص","difficulty":"متوسطة","time":40,"summary":"قضية اختفاء شخص في روما. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":30,"title":"سر النفق القديم","city":"باريس","type":"سرقة تحفة","difficulty":"صعبة","time":40,"summary":"قضية سرقة تحفة في باريس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":31,"title":"جريمة فوق السطح","city":"القاهرة","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":40,"summary":"قضية تلاعب بسجل في القاهرة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":32,"title":"الطريق المقطوع","city":"الإسكندرية","type":"جريمة غامضة","difficulty":"خبير","time":40,"summary":"قضية جريمة غامضة في الإسكندرية. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":33,"title":"الكتاب المحظور","city":"المنصورة","type":"سرقة أثر","difficulty":"متوسطة","time":25,"summary":"قضية سرقة أثر في المنصورة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":34,"title":"النداء الأخير","city":"أسوان","type":"اختفاء غامض","difficulty":"صعبة","time":25,"summary":"قضية اختفاء غامض في أسوان. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":35,"title":"لغز السيارة البيضاء","city":"الأقصر","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":25,"summary":"قضية سرقة وثيقة في الأقصر. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":36,"title":"اختفاء تمثال صغير","city":"بورسعيد","type":"ابتزاز","difficulty":"خبير","time":25,"summary":"قضية ابتزاز في بورسعيد. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":37,"title":"العلامة الثالثة","city":"السويس","type":"اختفاء شخص","difficulty":"متوسطة","time":30,"summary":"قضية اختفاء شخص في السويس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":38,"title":"سر الباب المغلق","city":"الفيوم","type":"سرقة تحفة","difficulty":"صعبة","time":30,"summary":"قضية سرقة تحفة في الفيوم. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":39,"title":"الزائر المجهول","city":"طنطا","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":30,"summary":"قضية تلاعب بسجل في طنطا. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":40,"title":"لغز القارب الليلي","city":"الزقازيق","type":"جريمة غامضة","difficulty":"خبير","time":30,"summary":"قضية جريمة غامضة في الزقازيق. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":41,"title":"الدفتر الممزق","city":"مرسى مطروح","type":"سرقة أثر","difficulty":"متوسطة","time":35,"summary":"قضية سرقة أثر في مرسى مطروح. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":42,"title":"الحقيبة في المحطة","city":"شرم الشيخ","type":"اختفاء غامض","difficulty":"صعبة","time":35,"summary":"قضية اختفاء غامض في شرم الشيخ. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":43,"title":"سر الفندق المهجور","city":"إسطنبول","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":35,"summary":"قضية سرقة وثيقة في إسطنبول. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":44,"title":"الخريطة الناقصة","city":"روما","type":"ابتزاز","difficulty":"خبير","time":35,"summary":"قضية ابتزاز في روما. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":45,"title":"لغز المعرض الليلي","city":"باريس","type":"اختفاء شخص","difficulty":"متوسطة","time":40,"summary":"قضية اختفاء شخص في باريس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":46,"title":"الرسالة من الماضي","city":"القاهرة","type":"سرقة تحفة","difficulty":"صعبة","time":40,"summary":"قضية سرقة تحفة في القاهرة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":47,"title":"سر الصندوق الحجري","city":"الإسكندرية","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":40,"summary":"قضية تلاعب بسجل في الإسكندرية. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":48,"title":"جريمة عند الفجر","city":"المنصورة","type":"جريمة غامضة","difficulty":"خبير","time":40,"summary":"قضية جريمة غامضة في المنصورة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":49,"title":"لغز القناع","city":"أسوان","type":"سرقة أثر","difficulty":"متوسطة","time":25,"summary":"قضية سرقة أثر في أسوان. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":50,"title":"المفتاح الثاني","city":"الأقصر","type":"اختفاء غامض","difficulty":"صعبة","time":25,"summary":"قضية اختفاء غامض في الأقصر. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":51,"title":"الطرد المشبوه","city":"بورسعيد","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":25,"summary":"قضية سرقة وثيقة في بورسعيد. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":52,"title":"اختفاء السجل","city":"السويس","type":"ابتزاز","difficulty":"خبير","time":25,"summary":"قضية ابتزاز في السويس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":53,"title":"سر الممر السري","city":"الفيوم","type":"اختفاء شخص","difficulty":"متوسطة","time":30,"summary":"قضية اختفاء شخص في الفيوم. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":54,"title":"الصورة بلا صاحب","city":"طنطا","type":"سرقة تحفة","difficulty":"صعبة","time":30,"summary":"قضية سرقة تحفة في طنطا. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":55,"title":"لغز الساعة الثامنة","city":"الزقازيق","type":"تلاعب بسجل","difficulty":"صعبة جدًا","time":30,"summary":"قضية تلاعب بسجل في الزقازيق. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":56,"title":"الظل في المخزن","city":"مرسى مطروح","type":"جريمة غامضة","difficulty":"خبير","time":30,"summary":"قضية جريمة غامضة في مرسى مطروح. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":57,"title":"السرقة المستحيلة","city":"شرم الشيخ","type":"سرقة أثر","difficulty":"متوسطة","time":35,"summary":"قضية سرقة أثر في شرم الشيخ. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":58,"title":"لغز التذكرة القديمة","city":"إسطنبول","type":"اختفاء غامض","difficulty":"صعبة","time":35,"summary":"قضية اختفاء غامض في إسطنبول. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":59,"title":"الرسالة الأخيرة","city":"روما","type":"سرقة وثيقة","difficulty":"صعبة جدًا","time":35,"summary":"قضية سرقة وثيقة في روما. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"},{"id":60,"title":"سر الختم الأسود","city":"باريس","type":"ابتزاز","difficulty":"خبير","time":35,"summary":"قضية ابتزاز في باريس. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"ياسين"},{"id":61,"title":"القضية 60: الوجه الخفي","city":"القاهرة","type":"اختفاء شخص","difficulty":"متوسطة","time":40,"summary":"قضية اختفاء شخص في القاهرة. أمام الفريق عدة روايات وأدلة متعارضة، والحل يحتاج ربط المكان بالخط الزمني وتناقضات الشهود.","culprit":"مروان"}];
-let selectedCaseId=1;
-function getSelectedCase(){return CASES.find(c=>c.id===selectedCaseId)||CASES[0]}
 
-const CASE={
-suspects:[
-{id:"ليلى",job:"تاجرة تحف",age:39,base:"الجمالية",secret:"كانت مدينة لشخص مجهول وتخفي دفتر ديون."},
-{id:"مروان",job:"حارس ليلي",age:47,base:"خان الخليلي",secret:"غيّر وقت نوبته دون تسجيل رسمي."},
-{id:"حسام",job:"مصور صحفي",age:31,base:"وسط القاهرة",secret:"التقط صورًا لم تكن مخصصة للنشر."},
-{id:"ياسين",job:"سائق سيارة أجرة",age:42,base:"الحسين",secret:"نقل شخصًا رفض ذكر اسمه."},
-{id:"فارس",job:"جامع خرائط قديمة",age:55,base:"مصر الجديدة",secret:"كان يبحث عن مسار قديم أسفل المنطقة."},
-{id:"ندى",job:"مرممة آثار",age:34,base:"الزمالك",secret:"تعرفت على الخاتم قبل الجميع."}
-],
-places:{
-السوق:{name:"سوق خان الخليلي",actions:[
-["cam","🎥 مراجعة الكاميرات","تتبع الحركة حول المتجر، لكن بعض التسجيلات ناقصة."],
-["people","👤 سؤال أصحاب المحلات","اسألوا من رأى شيئًا غير معتاد الليلة."],
-["search","🔎 تفتيش المكان","ابحثوا عن أثر مادي أو شيء تركه الفاعل."],
-["taxi","🚕 سؤال سائقي الأجرة","تتبعوا أي سيارة غادرت المنطقة في وقت حساس."]
-]},
-المتجر:{name:"متجر دار الهلال للتحف",actions:[
-["lock","🔐 فحص القفل","القفل سليم، لكن توجد خدوش دقيقة حول الأسطوانة."],
-["books","📚 فحص سجل المبيعات","السجل يكشف زيارة غير مسجلة قبل السرقة."],
-["floor","🧤 تفتيش الأرضية","أثر صغير قد يربط شخصًا بالمكان."],
-["owner","👤 استجواب صاحبة المتجر","ليلى تخفي معلومة عن الخاتم."]
-]},
-المقهى:{name:"مقهى السرايا",actions:[
-["witness","☕ استجواب النادل","يتذكر طلبًا غريبًا في وقت حساس."],
-["table","🪑 فحص الطاولة","إيصال وورقة صغيرة بقيت بعد مغادرة شخص."],
-["phone","📱 تتبع مكالمة عامة","هاتف عمومي استُخدم قرب المقهى."]
-]},
-الزقاق:{name:"الزقاق الخلفي",actions:[
-["foot","👣 فحص آثار الأقدام","أثر حذاء جزئي يقود نحو الممر الخلفي."],
-["bin","🗑️ تفتيش صندوق مهملات","شيء صغير يحمل رمز الهلال."],
-["route","🗺️ إعادة بناء طريق الهروب","قارنوا الأزقة مع زمن حركة السيارة."]
-]},
-المخزن:{name:"مخزن قديم قرب باب زويلة",actions:[
-["map","🗺️ فحص خريطة قديمة","الخريطة تكشف مسارًا مختصرًا لا يظهر على الخرائط الحديثة."],
-["box","📦 فحص صندوق شحن","الصندوق يحمل رقمًا يطابق ورقة من السوق."],
-["ledger","📝 فحص دفتر قديم","اسم مستعار يظهر في أكثر من سجل."]
-]}
-},
-evidence:[],
-connections:[],
-hints:[
-"لا تثقوا في توقيت الشاهد وحده. اسألوا دائمًا: ما الذي يثبت أن الساعة صحيحة؟",
-"الخاتم لم يخرج من المتجر بالطريق الذي يتوقعه معظم الناس.",
-"شخص ما استخدم سيارة ليست باسمه، لكن صاحب السيارة يعرفه.",
-"التسجيل الناقص ليس دليل براءة؛ أحيانًا الفراغ نفسه هو الدليل.",
-"إذا ربطتم رمز الهلال بسجل الشحن والخريطة القديمة، ستعرفون لماذا اختير هذا السوق تحديدًا."
-],
-solution:"فارس",
-required:["D4","D7","D10","D14"],
-bestPath:["cam","search","taxi","map","box"],
+/* =========================================================
+   بيانات اللعبة
+========================================================= */
+
+const cities=[
+ "القاهرة",
+ "الإسكندرية",
+ "الجيزة",
+ "المنصورة",
+ "بورسعيد",
+ "الإسماعيلية",
+ "السويس",
+ "طنطا",
+ "الزقازيق",
+ "دمياط",
+ "أسوان",
+ "الأقصر",
+ "الفيوم",
+ "المنيا",
+ "أسيوط",
+ "سوهاج",
+ "قنا",
+ "الغردقة",
+ "شرم الشيخ",
+ "مرسى مطروح"
+];
+
+const locations=[
+ "السوق القديم",
+ "الفندق المهجور",
+ "محطة القطار",
+ "المتحف",
+ "الميناء",
+ "المسرح",
+ "المكتبة",
+ "المخزن",
+ "المطعم",
+ "الفيلا القديمة",
+ "دار المزادات",
+ "شركة الشحن",
+ "المستشفى",
+ "الجامعة",
+ "الورشة",
+ "المعرض الفني",
+ "محطة الإذاعة",
+ "مركز الأبحاث",
+ "القصر القديم",
+ "استوديو التصوير"
+];
+
+const crimes=[
+ "اختفاء رجل أعمال",
+ "سرقة لوحة نادرة",
+ "اختفاء مخطوطة",
+ "سرقة مجوهرات",
+ "اختفاء شاهد",
+ "تسميم غامض",
+ "حريق متعمد",
+ "سرقة ملف سري",
+ "اختفاء صندوق",
+ "ابتزاز رجل مهم",
+ "سرقة آثار",
+ "اختفاء صحفي",
+ "سرقة شريحة بيانات",
+ "تزوير وثائق",
+ "اختفاء عالم",
+ "حريق في مخزن",
+ "سرقة تسجيل",
+ "اختفاء حقيبة",
+ "سرقة قطعة أثرية",
+ "اختفاء موظف"
+];
+
+const titles=[
+ "ظل في السوق",
+ "الغرفة المغلقة",
+ "آخر قطار",
+ "اللوحة الصامتة",
+ "الرسالة الحمراء",
+ "الصندوق الأسود",
+ "صوت القبو",
+ "الساعة المتوقفة",
+ "المخطوطة المفقودة",
+ "الشاهد الأخير",
+ "حريق الفجر",
+ "الطرد الغامض",
+ "القلادة الزرقاء",
+ "الملف 17",
+ "الكاميرا الأخيرة",
+ "الرجل الذي لم يصل",
+ "المزاد السري",
+ "تحت ضوء المسرح",
+ "الشريحة المفقودة",
+ "الطابق التاسع",
+ "الرسالة بلا اسم",
+ "الخريطة الممزقة",
+ "الوجه في المرآة",
+ "حارس الليل",
+ "الطرد المشفر",
+ "الممر المغلق",
+ "سر القصر",
+ "الظل عند الرصيف",
+ "الساعة الثانية عشرة",
+ "الملف المحروق",
+ "الضيف الغامض",
+ "الباب الخلفي",
+ "المقعد 12",
+ "النداء الأخير",
+ "الحجرة الزجاجية",
+ "المجوهرات الصامتة",
+ "رحلة بلا عودة",
+ "العلامة الغريبة",
+ "الورقة الناقصة",
+ "الميناء رقم 6",
+ "العدسة المكسورة",
+ "المخزن 3",
+ "الرسام المفقود",
+ "الحساب الأخير",
+ "الصندوق الأحمر",
+ "الشحنة 19",
+ "الرجل ذو المعطف",
+ "الرسالة الأخيرة",
+ "النقطة العمياء",
+ "الدرج السري",
+ "الطابع النادر",
+ "الرحلة السابعة",
+ "البيت بلا عنوان",
+ "المفتاح الثاني",
+ "الملف الأزرق",
+ "الساعة الفضية",
+ "الغرفة المستحيلة",
+ "الخيط الأخير",
+ "الظل الأخير"
+];
+
+const people=[
+ "كريم","يوسف","سامر","نادر","آدم","مازن",
+ "رامي","حسام","فارس","باسم","عمر","طارق",
+ "سليم","مروان","عادل","هاني","زياد","جلال",
+ "منير","رامز","وائل","ياسين","شريف","مالك",
+ "رائد","إياد","هشام","معتز","صفوت","فؤاد",
+ "أنس","مراد","نديم","حاتم","نبيل","سيف",
+ "كمال","سامي","فريد","علاء","بدر","محمود",
+ "يحيى","كامل","فادي","رؤوف","حازم","وليد",
+ "تامر","بشير","جابر","رؤى","هالة","نور"
+];
+
+const jobs=[
+ "موظف أرشيف",
+ "صحفي",
+ "سائق",
+ "مدير",
+ "حارس",
+ "مصور",
+ "باحث",
+ "تاجر",
+ "محامٍ",
+ "مهندس",
+ "طبيب",
+ "محاسب",
+ "فني كاميرات",
+ "مرشد سياحي",
+ "خبير مزادات",
+ "عامل مخزن",
+ "مسؤول أمن",
+ "مساعد مدير"
+];
+
+const motives=[
+ "الانتقام",
+ "الطمع المالي",
+ "إخفاء دليل",
+ "حماية شريك",
+ "منع شهادة",
+ "سرقة ملكية",
+ "إخفاء عملية احتيال",
+ "استرداد مال",
+ "إخفاء علاقة",
+ "التخلص من منافس"
+];
+
+
+/* =========================================================
+   إنشاء 60 قضية مختلفة
+========================================================= */
+
+const cases=[];
+
+for(let i=0;i<60;i++){
+
+ let culprit=people[(i*7+3)%people.length];
+
+ let suspects=[culprit];
+
+ let j=0;
+
+ while(suspects.length<6){
+
+  let name=people[(i*11+j*5+9)%people.length];
+
+  if(!suspects.includes(name)){
+   suspects.push(name);
+  }
+
+  j++;
+ }
+
+ let city=cities[i%cities.length];
+
+ let location=locations[(i*3+2)%locations.length];
+
+ let crime=crimes[i%crimes.length];
+
+ let victim=people[(i*13+17)%people.length];
+
+ let motive=motives[i%motives.length];
+
+ let evidence=[
+  {
+   id:"E1",
+   title:"تسجيل الكاميرا",
+   type:"📷 كاميرا",
+   description:
+   "تسجيل كاميرا قريب من الموقع يظهر حركة غير طبيعية في وقت حساس.",
+   reliability:"مرتفعة"
+  },
+  {
+   id:"E2",
+   title:"سجل الهاتف",
+   type:"📱 هاتف",
+   description:
+   "سجل مكالمة يضع أحد الأشخاص في مكان مختلف عن المكان الذي قال إنه كان فيه.",
+   reliability:"مرتفعة"
+  },
+  {
+   id:"E3",
+   title:"سجل المركبة",
+   type:"🚗 مركبة",
+   description:
+   "المركبة ظهرت في مكانين خلال فترة زمنية قصيرة.",
+   reliability:"متوسطة"
+  },
+  {
+   id:"E4",
+   title:"شهادة شاهد",
+   type:"👤 شاهد",
+   description:
+   "الشاهد يذكر معلومة صحيحة جزئيًا، لكن توقيت شهادته يثير الشك.",
+   reliability:"متوسطة"
+  },
+  {
+   id:"E5",
+   title:"أثر في الموقع",
+   type:"📍 موقع",
+   description:
+   "أثر مادي يربط مسرح الجريمة بمكان آخر.",
+   reliability:"مرتفعة"
+  },
+  {
+   id:"E6",
+   title:"وثيقة مالية",
+   type:"📝 وثيقة",
+   description:
+   "تحويل مالي يكشف دافعًا محتملًا، لكنه لا يثبت الجريمة بمفرده.",
+   reliability:"منخفضة"
+  }
+ ];
+
+ let suspectData=[];
+
+ for(let k=0;k<6;k++){
+
+  suspectData.push({
+
+   name:suspects[k],
+
+   age:24+((i+k*7)%35),
+
+   job:jobs[(i+k*2)%jobs.length],
+
+   role:k===0
+    ?"المشتبه الرئيسي"
+    :
+     ["موظف","شاهد","شريك","منافس","صديق"][k-1],
+
+   statement:
+    k===0
+    ?
+    "أقواله تبدو منطقية، لكن هناك تفصيلة لا تتفق تمامًا مع الخط الزمني."
+    :
+    "شهادته تبدو معقولة، لكنها تحتاج إلى التحقق من الأدلة."
+  });
+ }
+
+
+ let timeline=[
+  {
+   time:"18:20",
+   event:"وصول شخص إلى المنطقة."
+  },
+  {
+   time:"19:05",
+   event:"ظهور حركة غير معتادة أمام الكاميرا."
+  },
+  {
+   time:"19:40",
+   event:"مكالمة مرتبطة بالقضية."
+  },
+  {
+   time:"20:15",
+   event:"اختفاء الدليل الأول."
+  },
+  {
+   time:"20:50",
+   event:"تغير مفاجئ في مسار أحد المشتبه بهم."
+  },
+  {
+   time:"21:30",
+   event:"بدء التحقيق الرسمي."
+  }
+ ];
+
+
+ cases.push({
+
+  id:i+1,
+
+  title:titles[i],
+
+  city,
+
+  location,
+
+  crime,
+
+  victim,
+
+  culprit,
+
+  motive,
+
+  story:
+   `وقعت ${crime} في ${location} بمدينة ${city}. 
+    آخر شخص شوهد بالقرب من المكان لم يقدم تفسيرًا كاملًا لتحركاته.
+    أمامكم مجموعة من الأدلة المتضاربة، ولا يمكن حل القضية بدليل واحد.`,
+
+  suspects:suspectData,
+
+  evidence,
+
+  timeline,
+
+  hints:[
+   "ابدأوا بالوقت قبل أن تبحثوا عن الدافع.",
+   "قارنوا كلام كل مشتبه مع الكاميرات.",
+   "سجل الهاتف قد يكشف مكانًا مختلفًا.",
+   "المركبة يمكن أن تربط دليلين منفصلين.",
+   "الدافع وحده ليس دليلًا على الجريمة.",
+   "الحل يحتاج إلى ربط عدة خيوط."
+  ],
+
+  solutionEvidence:["E1","E2","E3","E4","E5"]
+
+ });
+
+}
+
+
+/* =========================================================
+   حالة اللعبة
+========================================================= */
+
+let save=JSON.parse(
+ localStorage.getItem("SERIAL_TRACE_SAVE")||"null"
+)||{
+ players:[],
+ unlocked:1,
+ highScore:0,
+ sound:true
 };
 
-let S={count:2,names:[],place:"السوق",tab:"scene",found:[],connections:[],hints:0,score:0,attempts:0,selected:null,selectedEvidence:[],selectedReasons:[],seconds:1500,sound:true,history:[]};
-let interval=null;
-
-const evidenceData={
-cam:{id:"D1",title:"مقطع كاميرا السوق",type:"كاميرا",desc:"التسجيل يظهر شخصًا يخرج من اتجاه المتجر عند 20:47. الوجه غير واضح، لكن حقيبة طويلة تظهر على كتفه.",reliability:78},
-people:{id:"D2",title:"شهادة صاحب محل مجاور",type:"شاهد",desc:"يقول إنه رأى رجلًا يسأل عن طريق خلفي، لكنه يخطئ في وصف لون معطفه.",reliability:52},
-search:{id:"D3",title:"أثر شمع أزرق",type:"أثر مادي",desc:"قطعة شمع صغيرة تحمل رمز الهلال ووجدت قرب باب المخزن.",reliability:86},
-taxi:{id:"D4",title:"سجل رحلة سيارة أجرة",type:"مركبة",desc:"سيارة أجرة غادرت قرب السوق الساعة 20:51. السائق يقول إن الراكب طلب التوقف عند مخزن قرب باب زويلة.",reliability:91},
-lock:{id:"D5",title:"خدوش أسطوانة القفل",type:"مادي",desc:"الخدوش لا تتطابق مع كسر عشوائي؛ يبدو أن شخصًا يعرف آلية القفل.",reliability:89},
-books:{id:"D6",title:"سجل مبيعات ناقص",type:"وثيقة",desc:"هناك زيارة غير مسجلة باسم مستعار قبل السرقة بثلاث ساعات.",reliability:73},
-floor:{id:"D7",title:"أثر حذاء خلف الرف",type:"مادي",desc:"الأثر مقاس 43، وفيه بقايا طين ممزوج بغبار حجري يشبه أرضية المخزن القديم.",reliability:88},
-owner:{id:"D8",title:"اعتراف ليلى الجزئي",type:"شهادة",desc:"ليلى تعترف أنها كانت تعرف قيمة الخاتم، لكنها تقول إن شخصًا طلب منها الاحتفاظ به ليلة واحدة قبل موعد التسليم.",reliability:69},
-witness:{id:"D9",title:"شهادة نادل المقهى",type:"شاهد",desc:"رجل يجلس وحده طلب قهوة ولم يشربها، ثم خرج بعد مكالمة قصيرة.",reliability:61},
-table:{id:"D10",title:"ورقة المقهى",type:"وثيقة",desc:"ورقة تحمل نصف جملة: «المسار القديم يبدأ من…» وبجوارها رمز الهلال.",reliability:84},
-phone:{id:"D11",title:"سجل هاتف عمومي",type:"اتصال",desc:"مكالمة استمرت 31 ثانية إلى رقم غير مسجل، في توقيت يسبق مغادرة سيارة الأجرة.",reliability:72},
-foot:{id:"D12",title:"أثر في الزقاق",type:"موقع",desc:"أثر حذاء ثانٍ يطابق نمط D7 جزئيًا، لكنه لا يكفي وحده لإثبات الهوية.",reliability:81},
-bin:{id:"D13",title:"قطعة قماش برمز الهلال",type:"أثر",desc:"قطعة قماش من غطاء صندوق قديم، والرمز مطبوع يدويًا.",reliability:76},
-map:{id:"D14",title:"الخريطة القديمة",type:"خريطة",desc:"الخريطة توضح ممرًا مختصرًا بين السوق والمخزن، ويظهر عليه نفس رمز الهلال.",reliability:94},
-box:{id:"D15",title:"رقم صندوق الشحن",type:"شحن",desc:"رقم الصندوق يطابق رقمًا جزئيًا في دفتر قديم، والصندوق مرتبط بعملية نقل باسم مستعار.",reliability:93},
-ledger:{id:"D16",title:"دفتر الأسماء المستعارة",type:"وثيقة",desc:"الاسم المستعار «الرحّال» يتكرر في سجلات خرائط قديمة، وبجانب أحدها ملاحظة بخط فارس.",reliability:90},
+let state={
+ case:null,
+ node:"start",
+ tab:"path",
+ found:new Set(),
+ hints:0,
+ score:0,
+ attempts:3
 };
 
-const $=x=>document.getElementById(x);
-function go(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");scrollTo(0,0)}
-function tone(f=500,d=.07){if(!S.sound)return;try{let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.frequency.value=f;g.gain.setValueAtTime(.045,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+d)}catch(e){}}
-function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2200)}
-function modal(x){$("modalContent").innerHTML=x;$("modal").classList.add("show")}
-function closeModal(){$("modal").classList.remove("show")}
-$("sound").onclick=()=>{S.sound=!S.sound;$("sound").textContent=S.sound?"🔊 الصوت":"🔇 الصوت";tone()}
+let finalPick={
+ suspect:null,
+ evidence:[],
+ reason:null
+};
 
-function how(){modal(`<h2 class="title">كيف تلعبون؟</h2><p class="muted">أنتم فريق واحد. في كل موقع ستظهر عدة طرق للتحقيق. لا يوجد طريق واحد للحل، لكن بعض الطرق أسرع وبعضها أصعب وقد تكشف معلومات مضللة.</p><div class="list"><div class="card"><b>اختاروا المكان</b><p class="muted">انتقلوا بين السوق والمتجر والمقهى والزقاق والمخزن حسب ما اكتشفتموه.</p></div><div class="card"><b>اختاروا طريقة التحقيق</b><p class="muted">كاميرات، شهود، تفتيش، مركبات، وثائق وغيرها.</p></div><div class="card"><b>اربطوا الأدلة</b><p class="muted">الدليل المنفرد لا يكفي. التناقضات والروابط هي التي تبني الحل.</p></div></div>`)}
-function showCases(){
-  renderCaseGrid();
-  go("cases");
+let history=["home"];
+
+
+/* =========================================================
+   أدوات الواجهة
+========================================================= */
+
+const $=id=>document.getElementById(id);
+
+function persist(){
+
+ localStorage.setItem(
+  "SERIAL_TRACE_SAVE",
+  JSON.stringify(save)
+ );
+
 }
-function renderCaseGrid(){
-  const grid=$("caseGrid");
-  const data=CASES;
-  grid.innerHTML=data.map(c=>`<button class="caseCard" onclick="chooseCase(${c.id})">
-    <span class="pill">القضية ${String(c.id).padStart(2,"0")}</span>
-    <h3>${c.title}</h3>
-    <div class="muted">📍 ${c.city} • ${c.type}</div>
-    <div class="muted">الصعوبة: ${c.difficulty} • ${c.time} دقيقة</div>
-  </button>`).join("");
-}
-function chooseCase(id){
-  selectedCaseId=id;
-  const c=getSelectedCase();
-  CASE.title=c.title; CASE.city=c.city; CASE.summary=c.summary;
-  go("count");
-  toast(`تم اختيار القضية ${String(c.id).padStart(2,"0")}: ${c.title}`);
-}
-function init(){let c=$("counts");c.innerHTML="";$("countGo").disabled=true;for(let n=2;n<=6;n++){let b=document.createElement("button");b.className="choice";b.textContent=n;b.onclick=()=>{S.count=n;document.querySelectorAll("#counts .choice").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");$("countGo").disabled=false;tone(650)};c.appendChild(b)}$("countGo").onclick=()=>{if(S.count>=2&&S.count<=6)names()}}
-function names(){
-  let f=$("playerNames");
-  f.innerHTML="";
-  for(let i=0;i<S.count;i++){
-    f.innerHTML+=`<div class="field">
-      <label>المحقق ${i+1}</label>
-      <input type="text" inputmode="text" autocomplete="off" autocapitalize="words"
-        class="input n" maxlength="18" value="" placeholder="اكتب اسم المحقق ${i+1}">
-    </div>`;
+
+function showScreen(id,addHistory=true){
+
+ document
+ .querySelectorAll(".screen")
+ .forEach(x=>x.classList.remove("active"));
+
+ $(id).classList.add("active");
+
+ if(addHistory){
+
+  if(history[history.length-1]!==id){
+   history.push(id);
   }
-  go("names");
-  setTimeout(()=>document.querySelector(".n")?.focus(),120);
+
+ }
+
+ updateButtons();
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
 }
-function startCase(){S.names=[...document.querySelectorAll(".n")].map((x,i)=>x.value.trim()||`المحقق ${i+1}`);S.seconds=getSelectedCase().time*60;S.found=[];S.connections=[];S.hints=0;S.score=0;S.attempts=0;S.selected=null;S.selectedEvidence=[];S.selectedReasons=[];S.place="السوق";S.history=[];go("brief")}
-function begin(){clearInterval(interval);interval=setInterval(()=>{S.seconds--;renderTimer();if(S.seconds<=0){clearInterval(interval);toast("انتهى الوقت — القضية بردت.");}},1000);render();go("game");toast(`وصلتم إلى موقع التحقيق في ${getSelectedCase().city}. اختاروا أول طريقة للتحقيق.`);tone(800,.13)}
-function backFromGame(){
-  showRoutes();
+
+function updateButtons(){
+
+ $("backBtn").style.display=
+  history.length>1
+  ?"block"
+  :"none";
+
+ $("exitBtn").style.display=
+  ["intro","investigation","final","result"]
+  .includes(history[history.length-1])
+  ?"block"
+  :"none";
 }
-function renderTimer(){let x=Math.max(0,S.seconds),m=Math.floor(x/60),s=x%60,t=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;$("timer").textContent=t;$("briefTimer").textContent=t;$("timer").classList.toggle("warn",x<=300)}
-function nav(){let tabs=[["scene","موقع التحقيق"],["evidence","الأدلة"],["suspects","المشتبه بهم"],["timeline","الخط الزمني"],["connections","الروابط"],["final","الاتهام"]];$("nav").innerHTML=tabs.map(([k,v])=>`<button class="btn ${S.tab===k?"primary":""}" onclick="S.tab='${k}';render()">${v}</button>`).join("")}
-function render(){nav();let h={scene:sceneHTML,evidence:evidenceHTML,suspects:suspectsHTML,timeline:timelineHTML,connections:connectionsHTML,final:finalHTML}[S.tab]();$("content").innerHTML=`<div class="tab active">${h}</div>`;renderTimer()}
-function sceneHTML(){let p=CASE.places[S.place];return `<div class="routehub"><button class="routebtn" onclick="showRoutes()">↩ العودة إلى المسارات من الأول <small>اختاروا أي موقع مفتوح وابدأوا التحقيق منه من جديد</small></button></div><div class="scene"><span class="pill">📍 موقع حالي</span><div class="location" style="margin-top:10px">${p.name}</div><p class="muted">اختاروا خطوة التحقيق التالية. بعض الخطوات تفتح مواقع أو أدلة جديدة.</p><div class="actions-grid">${p.actions.map(a=>`<button class="action" onclick="investigate('${a[0]}')"><b>${a[1]}</b><span>${a[2]}</span></button>`).join("")}</div></div><div style="margin-top:11px" class="grid g3"><div class="card"><b>${S.found.length}</b><div class="tag">أدلة مكتشفة</div></div><div class="card"><b>${S.connections.length}</b><div class="tag">روابط صحيحة</div></div><div class="card"><b>${S.hints}</b><div class="tag">تلميحات</div></div></div>`}
-function exitCase(){
-  const c=getSelectedCase();
-  const ok=confirm(`هل تريد الخروج من القضية؟\n\nستعود إلى قائمة القضايا ولن تتابع هذه القضية من هذه الشاشة.`);
-  if(ok){
-    clearInterval(interval);
-    S.tab="scene";
-    S.selected=null;
-    S.selectedEvidence=[];
-    S.selectedReasons=[];
-    renderCaseGrid();
-    go("cases");
-    window.scrollTo({top:0,behavior:"smooth"});
-    toast(`تم الخروج من القضية ${String(c.id).padStart(2,"0")}`);
-  }
+
+function goBack(){
+
+ if(history.length<=1)return;
+
+ history.pop();
+
+ let previous=history[history.length-1];
+
+ showScreen(previous,false);
+
+ if(previous==="cases"){
+  renderCases();
+ }
+
 }
-function showRoutes(){
-  const places=Object.keys(CASE.places);
-  modal(`<h2 class="title">🧭 خريطة المسارات</h2>
-  <p class="muted">لا يوجد مسار واحد. يمكنكم العودة لأي مكان مكتشف وإعادة التحقيق فيه. إعادة زيارة المكان لا تحذف الأدلة التي جمعتموها.</p>
-  <div class="list">
-  ${places.map(x=>`<button class="routebtn" onclick="S.place='${x}';closeModal();S.tab='scene';render();window.scrollTo({top:0,behavior:'smooth'})">📍 ${CASE.places[x].name}<small>${x===S.place?'أنتم هنا الآن':'العودة إلى هذا المسار'}</small></button>`).join("")}
+
+$("backBtn").onclick=goBack;
+
+
+/* =========================================================
+   البداية
+========================================================= */
+
+function startSetup(){
+
+ history=["players"];
+
+ showScreen("players",false);
+
+}
+
+function choosePlayers(count){
+
+ save.players=[];
+
+ for(let i=0;i<count;i++){
+  save.players.push("محقق "+(i+1));
+ }
+
+ $("nameInputs").innerHTML=
+ save.players.map((name,i)=>`
+
+  <div>
+   <label class="muted">
+    المحقق ${i+1}
+   </label>
+
+   <input
+    id="player_${i}"
+    value="${name}"
+    maxlength="25"
+   >
   </div>
-  <div class="divider"></div>
-  <button class="btn primary" style="width:100%" onclick="closeModal();generateMoreChoices()">🔎 البحث عن مسار إضافي</button>`);
+
+ `).join("");
+
+ history.push("names");
+
+ showScreen("names",false);
+
 }
-function generateMoreChoices(){
-  const extras=[
-    ["extraCam","📹 تكبير جزء مخفي من التسجيل","إعادة تحليل التسجيل بعد اكتشاف أدلة جديدة."],
-    ["extraWitness","🗣️ إعادة استجواب شاهد","معلومة جديدة قد تظهر لأنكم تعرفون الآن تفاصيل أكثر."],
-    ["extraRoute","🗺️ تجربة طريق بديل","قارنوا زمنين مختلفين لنفس الرحلة."],
-    ["extraObject","🧩 تحليل رمز الهلال","اربطوا الرمز بالأدلة المكتشفة بدل اعتباره علامة منفردة."],
-    ["extraRecords","📑 إعادة فحص السجلات","ابحثوا عن اسم أو رقم تكرر في أدلة سابقة."]
-  ];
-  const list=extras.map(a=>`<button class="action" onclick="dynamicInvestigation('${a[0]}','${a[1]}','${a[2]}')"><b>${a[1]}</b><span>${a[2]}</span></button>`).join("");
-  modal(`<h2 class="title">مسارات إضافية</h2><p class="muted">يمكنكم تكرار التحليل بعد جمع أدلة جديدة. كل مرة قد تفتح نتيجة مختلفة.</p><div class="actions-grid">${list}</div>`);
+
+function savePlayers(){
+
+ save.players=save.players.map((x,i)=>{
+
+  let value=$("player_"+i).value.trim();
+
+  return value||("محقق "+(i+1));
+
+ });
+
+ persist();
+
+ showCases();
+
 }
-function dynamicInvestigation(id,title,desc){
-  const key=id+":"+S.found.length+":"+S.connections.length;
-  const outcomes=[
-    "لاحظتم تفصيلًا لم يكن مهمًا قبل اكتشاف الأدلة الجديدة.",
-    "ظهر تناقض صغير يحتاج مقارنة مع الخط الزمني.",
-    "هذا المسار لا يحسم القضية، لكنه يفتح سؤالًا جديدًا.",
-    "اكتشفتم رابطًا غير مباشر بين شخصين ودليلين.",
-    "التحليل الجديد يقودكم إلى مسار آخر يمكن العودة إليه لاحقًا."
-  ];
-  const out=outcomes[(S.found.length+S.connections.length+S.history.length)%outcomes.length];
-  S.history.push({place:S.place,key:id,repeat:true});
-  S.score+=25;
-  closeModal();
-  toast("مسار جديد: "+out+" +25");
-  tone(780,.12);
-  render();
+
+
+/* =========================================================
+   صفحة القضايا
+========================================================= */
+
+function showCases(){
+
+ history=["cases"];
+
+ showScreen("cases",false);
+
+ renderCases();
+
 }
-function investigate(key){
-  let e=evidenceData[key];
-  if(!e){toast("هذا المسار لا يعطي دليلًا مباشرًا.");return}
-  if(!S.found.includes(e.id)){
-    S.found.push(e.id);S.score+=60;S.history.push({place:S.place,key});
-    toast(`دليل جديد: ${e.title} +60`);tone(850,.12);
-  }else{
-    S.history.push({place:S.place,key,repeat:true});
-    S.score+=15;
-    toast("إعادة التحقيق فتحت احتمالًا جديدًا +15");
-    tone(620,.09);
+
+function renderCases(){
+
+ $("caseGrid").innerHTML=
+ cases.map(c=>{
+
+  let locked=c.id>save.unlocked;
+
+  return `
+
+   <button
+    class="btn case-card ${locked?"locked":""}"
+    onclick="openCase(${c.id})"
+   >
+
+    <span class="case-number">
+     القضية ${String(c.id).padStart(3,"0")}
+    </span>
+
+    <h3>${c.title}</h3>
+
+    <div>
+     📍 ${c.city}
+    </div>
+
+    <div>
+     ${c.location}
+    </div>
+
+    <small class="muted">
+     ${c.crime}
+     ${locked?" 🔒":" ✓ متاحة"}
+    </small>
+
+   </button>
+
+  `;
+
+ }).join("");
+
+}
+
+
+/* =========================================================
+   فتح القضية
+========================================================= */
+
+function openCase(id){
+
+ if(id>save.unlocked){
+
+  alert(
+   "🔒 هذه القضية مقفلة.\n\nحلوا القضايا السابقة لفتحها."
+  );
+
+  return;
+ }
+
+ state={
+  case:cases[id-1],
+  node:"start",
+  tab:"path",
+  found:new Set(),
+  hints:0,
+  score:0,
+  attempts:3
+ };
+
+ finalPick={
+  suspect:null,
+  evidence:[],
+  reason:null
+ };
+
+ history=["intro"];
+
+ showScreen("intro",false);
+
+ renderIntro();
+
+}
+
+function renderIntro(){
+
+ let c=state.case;
+
+ $("introContent").innerHTML=`
+
+  <div class="card">
+
+   <span class="badge">
+    القضية ${String(c.id).padStart(3,"0")}
+   </span>
+
+   <h2>${c.title}</h2>
+
+   <div class="grid">
+
+    <div class="notice">
+     📍 <b>الموقع</b>
+     <br>
+     ${c.city}
+     <br>
+     ${c.location}
+    </div>
+
+    <div class="notice">
+     ⚠️ <b>القضية</b>
+     <br>
+     ${c.crime}
+    </div>
+
+   </div>
+
+   <p>
+    ${c.story}
+   </p>
+
+   <div class="notice warning">
+    🎯 <b>مهمتكم:</b>
+    <br>
+    اكتشاف المسؤول الحقيقي من خلال
+    الأدلة + التوقيت + الروابط.
+   </div>
+
+   <button
+    class="btn primary"
+    onclick="beginInvestigation()"
+   >
+    🔎 دخول مسرح التحقيق
+   </button>
+
+  </div>
+
+ `;
+
+}
+
+function beginInvestigation(){
+
+ history.push("investigation");
+
+ showScreen("investigation",false);
+
+ renderInvestigation();
+
+}
+
+
+/* =========================================================
+   مسارات التحقيق
+========================================================= */
+
+function renderInvestigation(){
+
+ renderTabs();
+
+ if(state.tab==="path"){
+  renderPath();
+ }
+
+ if(state.tab==="evidence"){
+  renderEvidence();
+ }
+
+ if(state.tab==="suspects"){
+  renderSuspects();
+ }
+
+ if(state.tab==="timeline"){
+  renderTimeline();
+ }
+
+ if(state.tab==="locations"){
+  renderLocations();
+ }
+
+ if(state.tab==="discussion"){
+  renderDiscussion();
+ }
+
+}
+
+function renderTabs(){
+
+ const tabs=[
+  ["path","🧭 المسار"],
+  ["evidence","🔎 الأدلة"],
+  ["suspects","👤 المشتبهون"],
+  ["timeline","🕐 الخط الزمني"],
+  ["locations","📍 المواقع"],
+  ["discussion","🧩 النقاش"]
+ ];
+
+ $("tabs").innerHTML=
+ tabs.map(t=>`
+
+  <button
+   class="tab ${state.tab===t[0]?"active":""}"
+   onclick="changeTab('${t[0]}')"
+  >
+   ${t[1]}
+  </button>
+
+ `).join("");
+
+}
+
+function changeTab(tab){
+
+ state.tab=tab;
+
+ renderInvestigation();
+
+}
+
+
+/* =========================================================
+   شجرة المسارات
+========================================================= */
+
+function getNode(){
+
+ switch(state.node){
+
+  case "start":
+
+   return {
+
+    title:"من أين تبدأون؟",
+
+    text:
+     `وصلتم إلى ${state.case.location} في ${state.case.city}.
+      الشرطة أعطتكم حرية اختيار نقطة البداية.`,
+
+    choices:[
+
+     {
+      text:"🎥 مراجعة كاميرات المكان",
+      next:"camera",
+      evidence:["E1"]
+     },
+
+     {
+      text:"👤 سؤال العاملين والشهود",
+      next:"witness",
+      evidence:["E4"]
+     },
+
+     {
+      text:"🔍 تفتيش مسرح الجريمة",
+      next:"scene",
+      evidence:["E5"]
+     },
+
+     {
+      text:"🚗 فحص السيارات القريبة",
+      next:"cars",
+      evidence:["E3"]
+     }
+
+    ]
+
+   };
+
+
+  case "camera":
+
+   return {
+
+    title:"الكاميرات",
+
+    text:
+     "وجدتم فجوة في التسجيل بين وقتين مهمين. ماذا تفعلون؟",
+
+    choices:[
+
+     {
+      text:"مقارنة كاميرا الشارع",
+      next:"street",
+      evidence:["E1"]
+     },
+
+     {
+      text:"البحث عن وقت حذف التسجيل",
+      next:"phone",
+      evidence:["E2"]
+     },
+
+     {
+      text:"العودة لمسار التحقيق",
+      next:"start",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "witness":
+
+   return {
+
+    title:"الشهود",
+
+    text:
+     "أحد الشهود قال إنه رأى شخصًا قرب المكان، لكن توقيت الشهادة غريب.",
+
+    choices:[
+
+     {
+      text:"إعادة بناء التوقيت",
+      next:"timeline",
+      evidence:["E4"]
+     },
+
+     {
+      text:"مقارنة الشهادة بسجل الهاتف",
+      next:"phone",
+      evidence:["E2"]
+     },
+
+     {
+      text:"الضغط على الشاهد",
+      next:"dead",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "scene":
+
+   return {
+
+    title:"مسرح الجريمة",
+
+    text:
+     "وجدتم أثرًا ماديًا يمكن أن يقود إلى مكان آخر.",
+
+    choices:[
+
+     {
+      text:"تتبع الأثر إلى السيارات",
+      next:"cars",
+      evidence:["E3"]
+     },
+
+     {
+      text:"البحث عن وثيقة مرتبطة بالأثر",
+      next:"document",
+      evidence:["E6"]
+     },
+
+     {
+      text:"تفتيش الباب الخلفي",
+      next:"timeline",
+      evidence:["E5"]
+     }
+
+    ]
+
+   };
+
+
+  case "cars":
+
+   return {
+
+    title:"المركبات",
+
+    text:
+     "سجل المركبة يضع سيارة قريبة من مسرح الجريمة.",
+
+    choices:[
+
+     {
+      text:"مقارنة المركبة بالكاميرا",
+      next:"street",
+      evidence:["E1"]
+     },
+
+     {
+      text:"ربط المركبة بسجل الهاتف",
+      next:"phone",
+      evidence:["E2"]
+     },
+
+     {
+      text:"مواجهة صاحب المركبة",
+      next:"suspect",
+      evidence:["E3"]
+     }
+
+    ]
+
+   };
+
+
+  case "street":
+
+   return {
+
+    title:"الكاميرا الخارجية",
+
+    text:
+     "الكاميرا الخارجية تكشف اتجاه المركبة، لكنها لا تكشف الشخص مباشرة.",
+
+    choices:[
+
+     {
+      text:"تحديد وقت الوصول",
+      next:"timeline",
+      evidence:["E1"]
+     },
+
+     {
+      text:"ربط السيارة بالهاتف",
+      next:"phone",
+      evidence:["E2","E3"]
+     },
+
+     {
+      text:"العودة للمسارات",
+      next:"start",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "phone":
+
+   return {
+
+    title:"الهاتف",
+
+    text:
+     "سجل الهاتف يحتوي على مكالمة في وقت حاسم.",
+
+    choices:[
+
+     {
+      text:"مقارنة وقت المكالمة بالكاميرا",
+      next:"timeline",
+      evidence:["E1","E2"]
+     },
+
+     {
+      text:"مقارنة الموقع بالمركبة",
+      next:"cars",
+      evidence:["E3"]
+     },
+
+     {
+      text:"مواجهة مشتبه بالسجل",
+      next:"suspect",
+      evidence:["E2"]
+     }
+
+    ]
+
+   };
+
+
+  case "timeline":
+
+   return {
+
+    title:"إعادة بناء الزمن",
+
+    text:
+     "بدأت الصورة تتضح. أحد الأقوال لا يتطابق مع الوقت.",
+
+    choices:[
+
+     {
+      text:"ربط التناقض بالكاميرا",
+      next:"finalPrep",
+      evidence:["E1"]
+     },
+
+     {
+      text:"ربط التناقض بالهاتف والمركبة",
+      next:"finalPrep",
+      evidence:["E2","E3"]
+     },
+
+     {
+      text:"البحث عن الشاهد",
+      next:"witness",
+      evidence:["E4"]
+     },
+
+     {
+      text:"إعادة البحث من البداية",
+      next:"start",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "document":
+
+   return {
+
+    title:"الوثيقة",
+
+    text:
+     "الوثيقة تشير إلى دافع محتمل، لكنها ليست إثباتًا.",
+
+    choices:[
+
+     {
+      text:"ربط الوثيقة بسجل الهاتف",
+      next:"finalPrep",
+      evidence:["E2"]
+     },
+
+     {
+      text:"ربط الوثيقة بالشاهد",
+      next:"finalPrep",
+      evidence:["E4"]
+     },
+
+     {
+      text:"اتهام صاحب الوثيقة مباشرة",
+      next:"dead",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "suspect":
+
+   return {
+
+    title:"مواجهة المشتبه",
+
+    text:
+     "المشتبه يغير جزءًا من روايته. لكن هل يكفي ذلك؟",
+
+    choices:[
+
+     {
+      text:"مقارنة كلامه بالخط الزمني",
+      next:"finalPrep",
+      evidence:["E4"]
+     },
+
+     {
+      text:"البحث عن الدافع المالي",
+      next:"document",
+      evidence:["E6"]
+     },
+
+     {
+      text:"اتهامه فورًا",
+      next:"dead",
+      evidence:[]
+     }
+
+    ]
+
+   };
+
+
+  case "finalPrep":
+
+   return {
+
+    title:"الصورة تقترب",
+
+    text:
+     "أصبح لديكم ما يكفي لتكوين نظرية، لكن يمكنكم العودة وجمع أدلة أخرى.",
+
+    choices:[
+
+     {
+      text:"فتح التحقيق النهائي",
+      next:"final",
+      evidence:[]
+     },
+
+     {
+      text:"العودة للمسارات من الأول",
+      next:"start",
+      evidence:[]
+     },
+
+     {
+      text:"البحث عن دليل إضافي",
+      next:"scene",
+      evidence:["E5"]
+     }
+
+    ]
+
+   };
+
+
+  case "dead":
+
+   return {
+
+    title:"طريق مسدود",
+
+    text:
+     "هذا القرار لم يعطكم الإجابة. القضية لم تنتهِ.",
+
+    choices:[
+
+     {
+      text:"↩ العودة للمسارات من الأول",
+      next:"start",
+      evidence:[]
+     },
+
+     {
+      text:"🔎 إعادة تفتيش المكان",
+      next:"scene",
+      evidence:["E5"]
+     }
+
+    ]
+
+   };
+
+ }
+
+}
+
+
+/* =========================================================
+   عرض المسار
+========================================================= */
+
+function renderPath(){
+
+ let node=getNode();
+
+ if(state.node==="final"){
+
+  openFinal();
+
+  return;
+ }
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <span class="badge">
+    مسار التحقيق
+   </span>
+
+   <h2>${node.title}</h2>
+
+   <p>
+    ${node.text}
+   </p>
+
+   <div class="stack">
+
+    ${node.choices.map((choice,index)=>`
+
+     <button
+      class="btn choice"
+      onclick='makeChoice(${JSON.stringify(choice)})'
+     >
+
+      <strong>
+       ${index+1}. ${choice.text}
+      </strong>
+
+      <span>
+       ${
+        choice.evidence.length
+        ?
+        "قد يكشف: "+choice.evidence.join(" + ")
+        :
+        "استكشاف المسار"
+       }
+      </span>
+
+     </button>
+
+    `).join("")}
+
+   </div>
+
+   <div class="grid" style="margin-top:10px">
+
+    <button class="btn" onclick="restartPath()">
+     ↩ العودة للمسارات من الأول
+    </button>
+
+    <button class="btn" onclick="giveHint()">
+     💡 اطلب تلميحًا -50
+    </button>
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================================================
+   تنفيذ القرار
+========================================================= */
+
+function makeChoice(choice){
+
+ for(const id of choice.evidence){
+
+  state.found.add(id);
+
+  state.score+=100;
+
+ }
+
+ state.node=choice.next;
+
+ if(state.node==="dead"){
+
+  state.score=Math.max(0,state.score-50);
+
+  alert(
+   "⚠️ هذا المسار لم يحسم القضية.\n\n" +
+   "يمكنكم العودة للمسارات وتجربة قرار آخر."
+  );
+
+ }
+
+ if(state.node==="final"){
+
+  openFinal();
+
+  return;
+ }
+
+ renderInvestigation();
+
+}
+
+
+/* =========================================================
+   التلميحات
+========================================================= */
+
+function giveHint(){
+
+ if(state.hints>=state.case.hints.length){
+
+  alert("لا توجد تلميحات إضافية.");
+
+  return;
+ }
+
+ state.score=Math.max(0,state.score-50);
+
+ alert(
+  "💡 التلميح:\n\n"+
+  state.case.hints[state.hints]
+ );
+
+ state.hints++;
+
+}
+
+
+/* =========================================================
+   العودة للمسارات
+========================================================= */
+
+function restartPath(){
+
+ state.node="start";
+ state.tab="path";
+
+ renderInvestigation();
+
+}
+
+
+/* =========================================================
+   الأدلة
+========================================================= */
+
+function renderEvidence(){
+
+ let found=[...state.found];
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <h2>🔎 الأدلة المكتشفة</h2>
+
+   ${
+    found.length
+    ?
+    `
+     <div class="stack">
+
+      ${found.map(id=>{
+
+       let e=state.case.evidence.find(x=>x.id===id);
+
+       return `
+
+        <div class="notice">
+
+         <span class="badge">${e.type}</span>
+
+         <h3>${e.title}</h3>
+
+         <p>${e.description}</p>
+
+         <small class="muted">
+          الموثوقية: ${e.reliability}
+         </small>
+
+        </div>
+
+       `;
+
+      }).join("")}
+
+     </div>
+    `
+    :
+    `
+     <div class="notice">
+      لم تكتشفوا أي دليل حتى الآن.
+     </div>
+    `
+   }
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================================================
+   المشتبهون
+========================================================= */
+
+function renderSuspects(){
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <h2>👤 المشتبهون</h2>
+
+   <div class="grid">
+
+    ${state.case.suspects.map(s=>`
+
+     <div class="card">
+
+      <span class="badge">
+       ${s.role}
+      </span>
+
+      <h3>${s.name}</h3>
+
+      <p class="muted">
+       العمر: ${s.age}
+       <br>
+       الوظيفة: ${s.job}
+      </p>
+
+      <p>
+       ${s.statement}
+      </p>
+
+     </div>
+
+    `).join("")}
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================================================
+   Timeline
+========================================================= */
+
+function renderTimeline(){
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <h2>🕐 الخط الزمني</h2>
+
+   <div class="timeline">
+
+    ${state.case.timeline.map(t=>`
+
+     <div class="time-row">
+
+      <div class="time">
+       ${t.time}
+      </div>
+
+      <div>
+       ${t.event}
+      </div>
+
+     </div>
+
+    `).join("")}
+
+   </div>
+
+   <div class="notice warning">
+
+    ⚠️ ابحثوا عن الشخص الذي لا تتوافق روايته
+    مع هذا الخط الزمني.
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================================================
+   المواقع
+========================================================= */
+
+function renderLocations(){
+
+ let c=state.case;
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <h2>📍 خريطة التحقيق</h2>
+
+   <div class="notice">
+    المدينة:
+    <b>${c.city}</b>
+   </div>
+
+   <div class="grid">
+
+    ${[
+     c.location,
+     "المدخل الرئيسي",
+     "المدخل الخلفي",
+     "موقف السيارات",
+     "نقطة المراقبة",
+     "الموقع الثاني"
+    ].map((place,i)=>`
+
+     <button
+      class="btn choice"
+      onclick="inspectLocation('${place}')"
+     >
+
+      <strong>📍 ${place}</strong>
+
+      <span>
+       اضغط لاستكشاف الموقع
+      </span>
+
+     </button>
+
+    `).join("")}
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+function inspectLocation(place){
+
+ if(place===state.case.location){
+
+  state.found.add("E5");
+
+  state.score+=100;
+
+  alert(
+   "🔎 وجدتم أثرًا جديدًا في الموقع.\n\n" +
+   "تمت إضافة دليل جديد."
+  );
+
+  renderInvestigation();
+
+ }else{
+
+  alert(
+   "📍 الموقع لا يحتوي حاليًا على دليل حاسم.\n\n" +
+   "يمكن أن يصبح مهمًا بعد ربط أدلة أخرى."
+  );
+
+ }
+
+}
+
+
+/* =========================================================
+   وضع النقاش
+========================================================= */
+
+function renderDiscussion(){
+
+ $("investigationContent").innerHTML=`
+
+  <div class="card">
+
+   <h2>🧩 وضع النقاش</h2>
+
+   <p class="muted">
+    توقفوا قليلًا وناقشوا القضية معًا.
+   </p>
+
+   <div class="grid">
+
+    <div class="notice">
+     👤 من لديه الدافع؟
+    </div>
+
+    <div class="notice">
+     🕐 من يناقض الخط الزمني؟
+    </div>
+
+    <div class="notice">
+     📷 ماذا تقول الكاميرات؟
+    </div>
+
+    <div class="notice">
+     📱 ماذا يقول الهاتف؟
+    </div>
+
+    <div class="notice">
+     🚗 كيف ترتبط المركبة؟
+    </div>
+
+    <div class="notice">
+     🧩 ما الأدلة التي تؤكد بعضها؟
+    </div>
+
+   </div>
+
+   <button
+    class="btn primary"
+    onclick="openFinal()"
+   >
+    🎯 فتح التحقيق النهائي
+   </button>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================================================
+   التحقيق النهائي
+========================================================= */
+
+function openFinal(){
+
+ history.push("final");
+
+ showScreen("final",false);
+
+ renderFinal();
+
+}
+
+function renderFinal(){
+
+ let c=state.case;
+
+ $("finalContent").innerHTML=`
+
+  <div class="card">
+
+   <span class="badge">
+    التحقيق النهائي
+   </span>
+
+   <h2>🎯 من المسؤول؟</h2>
+
+   <p class="muted">
+    لا تختاروا بناءً على دليل واحد.
+    فكروا في التوقيت والروابط والتناقضات.
+   </p>
+
+   <h3>1 — اختر المشتبه</h3>
+
+   <div class="grid">
+
+    ${c.suspects.map(s=>`
+
+     <button
+      class="btn choice suspectChoice"
+      data-name="${s.name}"
+      onclick="selectSuspect(this)"
+     >
+
+      <strong>${s.name}</strong>
+
+      <span>
+       ${s.job}
+      </span>
+
+     </button>
+
+    `).join("")}
+
+   </div>
+
+
+   <h3>2 — اختر الأدلة</h3>
+
+   <div class="grid">
+
+    ${c.evidence.map(e=>`
+
+     <button
+      class="btn choice evidenceChoice"
+      data-id="${e.id}"
+      onclick="selectEvidence(this)"
+     >
+
+      <strong>${e.title}</strong>
+
+      <span>${e.type}</span>
+
+     </button>
+
+    `).join("")}
+
+   </div>
+
+
+   <h3>3 — لماذا؟</h3>
+
+   <div class="reason-grid">
+
+    ${[
+     "تناقض الخط الزمني",
+     "دليل الكاميرا",
+     "صلة المركبة",
+     "تناقض الشاهد",
+     "دليل الموقع",
+     "تطابق عدة أدلة"
+    ].map((r,i)=>`
+
+     <button
+      class="btn choice reasonChoice"
+      data-reason="${i}"
+      onclick="selectReason(this)"
+     >
+      ${r}
+     </button>
+
+    `).join("")}
+
+   </div>
+
+
+   <div class="notice">
+    المحاولات المتبقية:
+    <b>${state.attempts}</b>
+   </div>
+
+
+   <div class="grid">
+
+    <button
+     class="btn primary"
+     onclick="submitTheory()"
+    >
+     🚨 إرسال النظرية
+    </button>
+
+    <button
+     class="btn"
+     onclick="restartPath()"
+    >
+     ↩ العودة للمسارات من الأول
+    </button>
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+function selectSuspect(button){
+
+ document
+ .querySelectorAll(".suspectChoice")
+ .forEach(x=>x.classList.remove("selected"));
+
+ button.classList.add("selected");
+
+ finalPick.suspect=button.dataset.name;
+
+}
+
+function selectEvidence(button){
+
+ button.classList.toggle("selected");
+
+ let id=button.dataset.id;
+
+ if(button.classList.contains("selected")){
+
+  if(!finalPick.evidence.includes(id)){
+   finalPick.evidence.push(id);
   }
-  branch(key);render();
+
+ }else{
+
+  finalPick.evidence=
+   finalPick.evidence.filter(x=>x!==id);
+
+ }
+
 }
-function branch(key){
-const routes={
-cam:["المقهى","الكاميرا أظهرت حقيبة، لكن الوجه غير واضح. يمكنكم الآن البحث عن شخص كان يحمل حقيبة مشابهة أو تتبع من غادر."],
-people:["المقهى","الشاهد ذكر مقهى السرايا. يمكن أن يكون التوقيت مهمًا."],
-search:["الزقاق","أثر الشمع يقود إلى الزقاق الخلفي."],
-taxi:["المخزن","السائق يذكر مخزنًا قرب باب زويلة. الطريق يفتح مسارًا جديدًا."],
-lock:["المتجر","القفل يعطي انطباعًا أن الفاعل عرف آلية المكان."],
-books:["المتجر","سجل المبيعات يشير إلى زيارة باسم مستعار."],
-floor:["الزقاق","أثر الحذاء يقود إلى مسار خلفي."],
-owner:["السوق","ليلى أخفت معلومة، لكن استجوابها مرة أخرى يحتاج دليلًا."],
-witness:["المقهى","النادل يتذكر مكالمة قصيرة قبل مغادرة الرجل."],
-table:["المخزن","الورقة تذكر مسارًا قديمًا."],
-phone:["السوق","المكالمة تسبق رحلة السيارة بدقائق."],
-foot:["المخزن","الأثر الثاني يقوي الرابط مع الطريق القديم."],
-bin:["المخزن","رمز الهلال يقود إلى خرائط وصناديق قديمة."],
-map:["المخزن","الخريطة تفتح مسار الشحن."],
-box:["المخزن","رقم الشحن يقود إلى دفتر الأسماء."],
-ledger:["المخزن","دفتر الأسماء يضع فارس داخل سلسلة الأدلة."]
+
+function selectReason(button){
+
+ document
+ .querySelectorAll(".reasonChoice")
+ .forEach(x=>x.classList.remove("selected"));
+
+ button.classList.add("selected");
+
+ finalPick.reason=
+  Number(button.dataset.reason);
+
+}
+
+
+/* =========================================================
+   إرسال النظرية
+========================================================= */
+
+function submitTheory(){
+
+ if(!finalPick.suspect){
+
+  alert("اختاروا المشتبه أولًا.");
+
+  return;
+ }
+
+ if(finalPick.evidence.length===0){
+
+  alert("اختاروا دليلًا واحدًا على الأقل.");
+
+  return;
+ }
+
+ if(finalPick.reason===null){
+
+  alert("اختاروا سبب النظرية.");
+
+  return;
+ }
+
+
+ if(finalPick.suspect===state.case.culprit){
+
+  let points=500;
+
+  let correctEvidence=
+   finalPick.evidence.filter(
+    x=>state.case.solutionEvidence.includes(x)
+   ).length;
+
+  points+=correctEvidence*100;
+
+  if(finalPick.reason===0){
+   points+=150;
+  }
+
+  state.score+=points;
+
+  save.highScore=
+   Math.max(save.highScore,state.score);
+
+  if(
+   state.case.id===save.unlocked &&
+   save.unlocked<60
+  ){
+
+   save.unlocked++;
+
+  }
+
+  persist();
+
+  showResult(true,points);
+
+ }else{
+
+  state.attempts--;
+
+  state.score=
+   Math.max(0,state.score-200);
+
+  if(state.attempts<=0){
+
+   showResult(false,0);
+
+  }else{
+
+   alert(
+    "❌ النظرية غير صحيحة.\n\n"+
+    "لم تنتهِ القضية.\n"+
+    "يمكنكم العودة للمسارات وتحليل الأدلة من جديد."
+   );
+
+   finalPick={
+    suspect:null,
+    evidence:[],
+    reason:null
+   };
+
+   renderFinal();
+
+  }
+
+ }
+
+}
+
+
+/* =========================================================
+   النتائج
+========================================================= */
+
+function showResult(success,points){
+
+ history=["result"];
+
+ showScreen("result",false);
+
+ let c=state.case;
+
+ if(success){
+
+  $("resultContent").innerHTML=`
+
+   <div class="card">
+
+    <div class="notice success">
+
+     <h2>🎯 تم حل القضية</h2>
+
+     <p>
+      عمل ممتاز يا محققين.
+     </p>
+
+    </div>
+
+    <h2>${c.title}</h2>
+
+    <div class="grid">
+
+     <div class="notice">
+      المسؤول الحقيقي:
+      <br>
+      <b>${c.culprit}</b>
+     </div>
+
+     <div class="notice">
+      الدافع:
+      <br>
+      <b>${c.motive}</b>
+     </div>
+
+     <div class="notice">
+      نقاط هذه الجولة:
+      <br>
+      <span class="score">+${points}</span>
+     </div>
+
+     <div class="notice">
+      أعلى نتيجة:
+      <br>
+      <span class="score">${save.highScore}</span>
+     </div>
+
+    </div>
+
+    <div class="notice">
+
+     🔎 لماذا كان الحل صحيحًا؟
+
+     <br><br>
+
+     لأن عدة خيوط اجتمعت:
+     الكاميرا + الهاتف + المركبة + التوقيت.
+
+    </div>
+
+    <div class="grid">
+
+     ${
+      c.id<60
+      ?
+      `
+       <button
+        class="btn primary"
+        onclick="openCase(${c.id+1})"
+       >
+        ➡️ القضية التالية
+       </button>
+      `
+      :
+      `
+       <button
+        class="btn primary"
+        onclick="showCases()"
+       >
+        🏆 كل القضايا
+       </button>
+      `
+     }
+
+     <button
+      class="btn"
+      onclick="showCases()"
+     >
+      📁 صفحة القضايا
+     </button>
+
+    </div>
+
+   </div>
+
+  `;
+
+ }else{
+
+  $("resultContent").innerHTML=`
+
+   <div class="card">
+
+    <div class="notice error">
+
+     <h2>❌ القضية أصبحت باردة</h2>
+
+     <p>
+      استُنفدت المحاولات.
+      <br>
+      لكن يمكنكم إعادة القضية من جديد.
+     </p>
+
+    </div>
+
+    <div class="grid">
+
+     <button
+      class="btn primary"
+      onclick="openCase(${c.id})"
+     >
+      🔄 إعادة التحقيق
+     </button>
+
+     <button
+      class="btn"
+      onclick="showCases()"
+     >
+      📁 صفحة القضايا
+     </button>
+
+    </div>
+
+   </div>
+
+  `;
+
+ }
+
+}
+
+
+/* =========================================================
+   شرح
+========================================================= */
+
+function showHow(){
+
+ history=["how"];
+
+ showScreen("how",false);
+
+}
+
+
+/* =========================================================
+   زر خروج من القضية
+========================================================= */
+
+$("exitBtn").onclick=function(){
+
+ if(!state.case)return;
+
+ showConfirmExit();
+
 };
-if(routes[key]){let [place,msg]=routes[key];S.place=place;toast(msg)}
+
+function showConfirmExit(){
+
+ $("modalContent").innerHTML=`
+
+  <h2>🚪 هل تريد الخروج من القضية؟</h2>
+
+  <p class="muted">
+
+   ستعود إلى صفحة القضايا.
+   <br>
+   التقدم في التحقيق الحالي لن يُعتبر حلًا للقضية.
+
+  </p>
+
+  <div class="grid">
+
+   <button
+    class="btn danger"
+    onclick="confirmExit()"
+   >
+    نعم، اخرج من القضية
+   </button>
+
+   <button
+    class="btn primary"
+    onclick="closeModal()"
+   >
+    لا، أكمل التحقيق
+   </button>
+
+  </div>
+
+ `;
+
+ $("modal").classList.add("show");
+
 }
-function evidenceHTML(){return `<div class="card"><h3 class="title">خزنة الأدلة</h3><p class="muted">كل دليل ظهر بسبب قرار اتخذتموه، وليس كل دليل له نفس القوة.</p><div class="grid g2">${Object.values(evidenceData).map(e=>{let f=S.found.includes(e.id);return `<div class="evidence ${f?"":"locked"}" onclick="${f?`showE('${e.id}')`:`toast('هذا الدليل لم تكتشفوه بعد')`}"><span class="pill">${e.id} • ${e.type}</span><h3>${f?e.title:"دليل غير مكتشف"}</h3><p class="muted">${f?e.desc:"ارجعوا للمواقع واختاروا مسارات تحقيق مختلفة."}</p>${f?`<div class="meter"><i style="--w:${e.reliability}%"></i></div><small>موثوقية ${e.reliability}%</small>`:""}</div>`}).join("")}</div></div>`}
-function showE(id){let e=Object.values(evidenceData).find(x=>x.id===id);modal(`<span class="pill">${e.id} • ${e.type}</span><h2 class="title">${e.title}</h2><p class="muted">${e.desc}</p><div class="card"><b>موثوقية الدليل</b><div class="meter" style="margin-top:8px"><i style="--w:${e.reliability}%"></i></div><small>${e.reliability}%</small></div><div style="margin-top:12px"><button class="btn primary" onclick="closeModal();connect('${e.id}')">اربط هذا الدليل</button></div>`)}
-function connect(id){let others=S.found.filter(x=>x!==id);if(!others.length){toast("اكتشفوا دليلًا آخر أولًا.");return}modal(`<h2 class="title">ربط الأدلة</h2><p class="muted">اختاروا دليلًا آخر. بعض الروابط صحيحة وبعضها مجرد تشابه مضلل.</p><div class="list">${others.map(x=>{let e=Object.values(evidenceData).find(q=>q.id===x);return `<button class="option" onclick="makeConn('${id}','${x}')">${x} — ${e.title}</button>`}).join("")}</div>`)}
-function makeConn(a,b){let valid=[["D4","D7"],["D7","D12"],["D10","D14"],["D14","D15"],["D15","D16"],["D3","D13"],["D1","D4"]];let ok=valid.some(x=>(x[0]===a&&x[1]===b)||(x[0]===b&&x[1]===a));if(ok&&!S.connections.some(x=>x.includes(a)&&x.includes(b))){S.connections.push([a,b]);S.score+=120;toast("رابط قوي اكتُشف +120");tone(950,.15)}else if(!ok){S.score=Math.max(0,S.score-20);toast("هذا الرابط غير حاسم — خسرتم 20 نقطة.");tone(180,.12)}closeModal();render()}
-function suspectsHTML(){return `<div class="card"><h3 class="title">المشتبه بهم</h3><p class="muted">كلهم شخصيات داخل القصة. لا يوجد لاعب هو المجرم.</p><div class="grid g2">${CASE.suspects.map(s=>`<div class="suspect" onclick="modal('<span class=\\'pill\\'>مشتبه به</span><h2 class=\\'title\\'>${s.id}</h2><p class=\\'muted\\'>العمر: ${s.age}<br>الوظيفة: ${s.job}<br>المنطقة: ${s.base}</p><div class=\\'card\\'><b>سر شخصي</b><p class=\\'muted\\'>${s.secret}</p></div>')"><span class="pill">مشتبه به</span><h3>${s.id}</h3><div class="muted">${s.age} سنة • ${s.job}</div></div>`).join("")}</div></div>`}
-function timelineHTML(){let times=[["20:12","دخول آخر زائر إلى متجر دار الهلال."],["20:28","مكالمة قصيرة من هاتف عمومي قرب المقهى."],["20:41","انقطاع جزء من تسجيل الكاميرا."],["20:47","شخص يحمل حقيبة يغادر باتجاه الزقاق."],["20:51","سيارة أجرة تغادر المنطقة."],["21:03","تظهر حركة قرب مخزن باب زويلة."]];return `<div class="card"><h3 class="title">الخط الزمني</h3><p class="muted">رتبوا الأدلة في أذهانكم واكتشفوا أين يستحيل أن يكون الشخص في وقت معين.</p><div class="list">${times.map(x=>`<div class="timeline"><b style="color:var(--cyan)">${x[0]}</b> — ${x[1]}</div>`).join("")}</div></div>`}
-function connectionsHTML(){return `<div class="card"><h3 class="title">لوحة الروابط</h3><p class="muted">الروابط الصحيحة أهم من كثرة الأدلة.</p>${S.connections.length?`<div class="list">${S.connections.map(c=>`<div class="connection">🧩 <b>${c[0]}</b> + <b>${c[1]}</b><div class="muted">رابط مكتشف</div></div>`).join("")}</div>`:`<div class="empty">لم تكتشفوا روابط بعد.</div>`}</div>`}
-function finalHTML(){return `<div class="card"><span class="pill">التحقيق النهائي</span><h2 class="title">من يقف خلف السرقة؟</h2><p class="muted">يمكنكم الاتهام 3 مرات. لا تتعجلوا.</p><div class="list">${CASE.suspects.map(s=>`<button class="option ${S.selected===s.id?"sel":""}" onclick="select('${s.id}')">${s.id} — ${s.job}</button>`).join("")}</div>${S.selected?`<div class="divider"></div><h3>اختاروا الأدلة الداعمة</h3><div class="grid g2">${S.found.map(id=>{let e=Object.values(evidenceData).find(x=>x.id===id);return `<button class="option ${S.selectedEvidence.includes(id)?"sel":""}" onclick="evSel('${id}')">${id} — ${e.title}</button>`}).join("")}</div><div class="divider"></div><h3>سبب النظرية</h3><div class="grid g2">${["تناقض زمني","رابط المركبة","أثر مادي","مسار قديم","تناقض شهادة","عدة أدلة متطابقة"].map(x=>`<button class="option ${S.selectedReasons.includes(x)?"sel":""}" onclick="reason('${x}')">${x}</button>`).join("")}</div><div style="margin-top:15px"><button class="btn primary" onclick="submit()">أرسلوا الاتهام</button></div>`:""}</div>`}
-function select(x){S.selected=x;S.selectedEvidence=[];S.selectedReasons=[];render()}
-function evSel(x){S.selectedEvidence.includes(x)?S.selectedEvidence=S.selectedEvidence.filter(a=>a!==x):S.selectedEvidence.length<5&&S.selectedEvidence.push(x);render()}
-function reason(x){S.selectedReasons.includes(x)?S.selectedReasons=S.selectedReasons.filter(a=>a!==x):S.selectedReasons.push(x);render()}
-function submit(){if(!S.selected||!S.selectedEvidence.length||!S.selectedReasons.length){toast("اختاروا المشتبه به والأدلة والسبب.");return}S.attempts++;let correct=S.selected===getSelectedCase().culprit;let req=CASE.required.filter(x=>S.selectedEvidence.includes(x)).length;let bonus=req*100+(S.connections.length*30)+(S.selectedReasons.includes("تناقض زمني")?120:0);S.score+=bonus+(correct?500:-200);if(correct||S.attempts>=3)finish(correct);else{modal(`<div class="center"><div style="font-size:45px;color:var(--bad)">✕</div><h2 class="title">النظرية غير مكتملة</h2><p class="muted">بعض الأدلة لا تتفق مع الاتهام. لم تنته القضية بعد.</p><div class="card"><b>تلميح إضافي</b><p class="muted">اسألوا أنفسكم: لماذا كان المجرم يحتاج إلى الطريق القديم بدل الخروج من السوق مباشرة؟</p></div><button class="btn primary" onclick="closeModal();S.hints++;S.score-=50;render()">أكملوا التحقيق • تلميح -50</button></div>`);tone(160,.2)}}
-function finish(ok){clearInterval(interval);let rank=S.score>=1500?"محقق أسطوري":S.score>=1100?"محقق خبير":S.score>=800?"محقق أول":S.score>=450?"محقق":"محقق مبتدئ";$("resultBox").innerHTML=`<div class="card center"><div style="font-size:58px;color:${ok?"var(--good)":"var(--bad)"}">${ok?"✓":"✕"}</div><h1>${ok?"تم حل القضية":"القضية بردت"}</h1><div class="score">${Math.max(0,S.score)}</div><p>${rank}</p><div class="grid g3"><div class="card"><b>${S.found.length}</b><div class="tag">أدلة مكتشفة</div></div><div class="card"><b>${S.connections.length}</b><div class="tag">روابط صحيحة</div></div><div class="card"><b>${S.attempts}</b><div class="tag">محاولات</div></div></div><div class="divider"></div><p class="muted">${ok?"الحل: ${getSelectedCase().culprit}. الدليل الحاسم لم يكن دليلًا واحدًا؛ بل تطابق أثر الحذاء مع الطريق القديم، ثم رقم الشحن، ثم الاسم المستعار في الدفتر.":"لم يتم إثبات هوية المجرم خلال المحاولات الثلاث. ستحتاج القضية إلى إعادة التحقيق."}</p><button class="btn primary" onclick="location.reload()">ابدأ من جديد</button></div>`;go("result");tone(ok?1000:140,.25)}
-init();
+
+function confirmExit(){
+
+ closeModal();
+
+ state={
+  case:null,
+  node:"start",
+  tab:"path",
+  found:new Set(),
+  hints:0,
+  score:0,
+  attempts:3
+ };
+
+ finalPick={
+  suspect:null,
+  evidence:[],
+  reason:null
+ };
+
+ history=["cases"];
+
+ showScreen("cases",false);
+
+ renderCases();
+
+}
+
+function closeModal(){
+
+ $("modal").classList.remove("show");
+
+}
+
+
+/* =========================================================
+   تشغيل أولي
+========================================================= */
+
+history=["home"];
+
+updateButtons();
+
 </script>
+
 </body>
 </html>
